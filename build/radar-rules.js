@@ -20,6 +20,155 @@
         docs:"https://docs.rsshub.app/anime.html#18comic-jin-man-tian-tang-wen-ku",
         source:[ "/" ],
         target:"/18comic/blogs/:category?" } ] },
+  "423down.com":{ _name:"423down",
+    www:[ { title:"首页",
+        docs:"https://docs.rsshub.app/bbs.html#_423down",
+        source:"/",
+        target:"/423down/index/all" },
+      { title:"安卓软件",
+        docs:"https://docs.rsshub.app/bbs.html#_423down",
+        source:"/:type",
+        target:(params) => {
+                    if (params.type === 'apk') {
+                        return '/423down/android/apk';
+                    }
+                } },
+      { title:"原创软件",
+        docs:"https://docs.rsshub.app/bbs.html#_423down",
+        source:"/:type",
+        target:(params) => {
+                    if (params.type === 'zd423') {
+                        return '/423down/computer/originalsoft';
+                    }
+                } },
+      { title:"媒体播放",
+        docs:"https://docs.rsshub.app/bbs.html#_423down",
+        source:"/:type",
+        target:(params) => {
+                    if (params.type === 'multimedia') {
+                        return '/423down/computer/multimedia';
+                    }
+                } },
+      { title:"网页浏览",
+        docs:"https://docs.rsshub.app/bbs.html#_423down",
+        source:"/:type",
+        target:(params) => {
+                    if (params.type === 'browser') {
+                        return '/423down/computer/browser';
+                    }
+                } },
+      { title:"图形图像",
+        docs:"https://docs.rsshub.app/bbs.html#_423down",
+        source:"/:type",
+        target:(params) => {
+                    if (params.type === 'image') {
+                        return '/423down/computer/image';
+                    }
+                } },
+      { title:"聊天软件",
+        docs:"https://docs.rsshub.app/bbs.html#_423down",
+        source:"/:type",
+        target:(params) => {
+                    if (params.type === 'im') {
+                        return '/423down/computer/im';
+                    }
+                } },
+      { title:"办公软件",
+        docs:"https://docs.rsshub.app/bbs.html#_423down",
+        source:"/:type",
+        target:(params) => {
+                    if (params.type === 'work') {
+                        return '/423down/computer/work';
+                    }
+                } },
+      { title:"上传下载",
+        docs:"https://docs.rsshub.app/bbs.html#_423down",
+        source:"/:type",
+        target:(params) => {
+                    if (params.type === 'down') {
+                        return '/423down/computer/down';
+                    }
+                } },
+      { title:"系统辅助",
+        docs:"https://docs.rsshub.app/bbs.html#_423down",
+        source:"/:type",
+        target:(params) => {
+                    if (params.type === 'systemsoft') {
+                        return '/423down/computer/systemsoft';
+                    }
+                } },
+      { title:"系统必备",
+        docs:"https://docs.rsshub.app/bbs.html#_423down",
+        source:"/:type",
+        target:(params) => {
+                    if (params.type === 'systemplus') {
+                        return '/423down/computer/systemplus';
+                    }
+                } },
+      { title:"安全软件",
+        docs:"https://docs.rsshub.app/bbs.html#_423down",
+        source:"/:type",
+        target:(params) => {
+                    if (params.type === 'security') {
+                        return '/423down/computer/security';
+                    }
+                } },
+      { title:"补丁相关",
+        docs:"https://docs.rsshub.app/bbs.html#_423down",
+        source:"/:type",
+        target:(params) => {
+                    if (params.type === 'patch') {
+                        return '/423down/computer/patch';
+                    }
+                } },
+      { title:"硬件相关",
+        docs:"https://docs.rsshub.app/bbs.html#_423down",
+        source:"/:type",
+        target:(params) => {
+                    if (params.type === 'hardwork') {
+                        return '/423down/computer/hardware';
+                    }
+                } },
+      { title:"windows 11",
+        docs:"https://docs.rsshub.app/bbs.html#_423down",
+        source:"/:type",
+        target:(params) => {
+                    if (params.type === 'win11') {
+                        return '/423down/os/win11';
+                    }
+                } },
+      { title:"windows 10",
+        docs:"https://docs.rsshub.app/bbs.html#_423down",
+        source:"/:type",
+        target:(params) => {
+                    if (params.type === 'win10') {
+                        return '/423down/os/win10';
+                    }
+                } },
+      { title:"windows 7",
+        docs:"https://docs.rsshub.app/bbs.html#_423down",
+        source:"/:type",
+        target:(params) => {
+                    if (params.type === 'win7') {
+                        return '/423down/os/win7';
+                    }
+                } },
+      { title:"windows xp",
+        docs:"https://docs.rsshub.app/bbs.html#_423down",
+        source:"/:type",
+        target:(params) => {
+                    if (params.type === 'winxp') {
+                        return '/423down/os/winxp';
+                    }
+                } },
+      { title:"windows pe",
+        docs:"https://docs.rsshub.app/bbs.html#_423down",
+        source:"/:type",
+        target:(params) => {
+                    if (params.type === 'winpe') {
+                        return '/423down/os/winpe';
+                    }
+                } } ] },
   "8world.com":{ _name:"8视界",
     ".":[ { title:"分类",
         docs:"https://docs.rsshub.app/new-media.html#_8-shi-jie-fen-lei",
@@ -31,6 +180,43 @@
         docs:"https://docs.rsshub.app/new-media.html#lun-jin-mei-ti-allaboutmacau-media-hua-ti",
         source:[ "/" ],
         target:"/:category?/:id?" } ] },
+  "abmedia.io":{ _name:"abmedia.io",
+    www:[ { title:"首页最新新闻",
+        docs:"https://docs.rsshub.app/new-media.html#lian-xin-wen-abmedia-shou-ye-zui-xin-xin-wen",
+        source:[ "/" ],
+        target:"/abmedia/index" },
+      { title:"频道",
+        docs:"https://docs.rsshub.app/new-media.html#lian-xin-wen-abmedia-lei-bie",
+        source:[ "/category/:catehory" ],
+        target:"/abmedia/:category" } ] },
+  "ecnu.edu.cn":{ _name:"ACM-ECNU",
+    acm:[ { title:"所有比赛列表",
+        docs:"https://docs.rsshub.app/programming.html#ACM-ECNU",
+        source:[ "/contest/" ],
+        target:"/acm-ecnu/contest/" },
+      { title:"仅公开比赛列表",
+        docs:"https://docs.rsshub.app/programming.html#ACM-ECNU",
+        source:[ "/contest/" ],
+        target:"/acm-ecnu/contest/public" } ] },
+  "aotter.net":{ _name:"電獺少女",
+    agirls:[ { title:"分類",
+        docs:"https://docs.rsshub.app/new-media.html##dian-ta-shao-nu",
+        source:[ "/posts/:category" ],
+        target:"/agirls/:category" },
+      { title:"精選主題列表",
+        docs:"https://docs.rsshub.app/new-media.html##dian-ta-shao-nu",
+        source:[ "/",
+          "/topic" ],
+        target:"/agirls/topic_list" },
+      { title:"精选主题",
+        docs:"https://docs.rsshub.app/new-media.html##dian-ta-shao-nu",
+        source:[ "/topic/:topic" ],
+        target:"/agirls/topic/:topic" } ] },
+  "ahjzu.edu.cn":{ _name:"安徽建筑大学",
+    news:[ { title:"通知公告",
+        docs:"https://docs.rsshub.app/university.html#an-hui-jian-zhu-da-xue",
+        source:"/20/list.htm",
+        target:"/ahjzu/news" } ] },
   "ajmide.com":{ _name:"阿基米德FM",
     m:[ { title:"播客",
         docs:"https://docs.rsshub.app/multimedia.html#a-ji-mi-de-fm-bo-ke",
@@ -39,16 +225,168 @@
                     const id = new URL(url).searchParams.get('id');
                     return `/ajmide/${id}`;
                 } } ] },
+  "appcenter.ms":{ _name:"App Center",
+    install:[ { title:"App Center Release",
+        docs:"https://docs.rsshub.app/program-update.html#app-center",
+        source:[ "/users/:user/apps/:app/distribution_groups/:distribution_group",
+          "/orgs/:user/apps/:app/distribution_groups/:distribution_group" ],
+        target:"/app-center/release/:user/:app/:distribution_group" } ] },
+  "appledaily.com":{ _name:"苹果新闻网",
+    tw:[ { title:"首頁",
+        docs:"https://docs.rsshub.app/traditional-media.html#ping-guo-xin-wen-wang",
+        source:[ "/:channel" ],
+        target:(params) => {
+                    if (params.channel === 'home') {
+                        return '/appledaily/:channel';
+                    }
+                } },
+      { title:"焦点",
+        docs:"https://docs.rsshub.app/traditional-media.html#ping-guo-xin-wen-wang",
+        source:[ "/realtime/:channel" ],
+        target:(params) => {
+                    if (params.channel === 'recommend') {
+                        return '/appledaily/:channel';
+                    }
+                } },
+      { title:"最新",
+        docs:"https://docs.rsshub.app/traditional-media.html#ping-guo-xin-wen-wang",
+        source:[ "/realtime/:channel" ],
+        target:(params) => {
+                    if (params.channel === 'new') {
+                        return '/appledaily/:channel';
+                    }
+                } },
+      { title:"热门",
+        docs:"https://docs.rsshub.app/traditional-media.html#ping-guo-xin-wen-wang",
+        source:[ "/realtime/:channel" ],
+        target:(params) => {
+                    if (params.channel === 'hot') {
+                        return '/appledaily/:channel';
+                    }
+                } },
+      { title:"生活",
+        docs:"https://docs.rsshub.app/traditional-media.html#ping-guo-xin-wen-wang",
+        source:[ "/realtime/:channel" ],
+        target:(params) => {
+                    if (params.channel === 'life') {
+                        return '/appledaily/:channel';
+                    }
+                } },
+      { title:"娱乐",
+        docs:"https://docs.rsshub.app/traditional-media.html#ping-guo-xin-wen-wang",
+        source:[ "/realtime/:channel" ],
+        target:(params) => {
+                    if (params.channel === 'entertainment') {
+                        return '/appledaily/:channel';
+                    }
+                } },
+      { title:"社会",
+        docs:"https://docs.rsshub.app/traditional-media.html#ping-guo-xin-wen-wang",
+        source:[ "/realtime/:channel" ],
+        target:(params) => {
+                    if (params.channel === 'local') {
+                        return '/appledaily/:channel';
+                    }
+                } },
+      { title:"财经地产",
+        docs:"https://docs.rsshub.app/traditional-media.html#ping-guo-xin-wen-wang",
+        source:[ "/realtime/:channel" ],
+        target:(params) => {
+                    if (params.channel === 'property') {
+                        return '/appledaily/:channel';
+                    }
+                } },
+      { title:"国际",
+        docs:"https://docs.rsshub.app/traditional-media.html#ping-guo-xin-wen-wang",
+        source:[ "/realtime/:channel" ],
+        target:(params) => {
+                    if (params.channel === 'international') {
+                        return '/appledaily/:channel';
+                    }
+                } },
+      { title:"政治",
+        docs:"https://docs.rsshub.app/traditional-media.html#ping-guo-xin-wen-wang",
+        source:[ "/realtime/:channel" ],
+        target:(params) => {
+                    if (params.channel === 'politics') {
+                        return '/appledaily/:channel';
+                    }
+                } },
+      { title:"3C车城",
+        docs:"https://docs.rsshub.app/traditional-media.html#ping-guo-xin-wen-wang",
+        source:[ "/realtime/:channel" ],
+        target:(params) => {
+                    if (params.channel === 'gadget') {
+                        return '/appledaily/:channel';
+                    }
+                } },
+      { title:"吃喝玩乐",
+        docs:"https://docs.rsshub.app/traditional-media.html#ping-guo-xin-wen-wang",
+        source:[ "/realtime/:channel" ],
+        target:(params) => {
+                    if (params.channel === 'supplement') {
+                        return '/appledaily/:channel';
+                    }
+                } },
+      { title:"体育",
+        docs:"https://docs.rsshub.app/traditional-media.html#ping-guo-xin-wen-wang",
+        source:[ "/realtime/:channel" ],
+        target:(params) => {
+                    if (params.channel === 'sports') {
+                        return '/appledaily/:channel';
+                    }
+                } },
+      { title:"苹评理",
+        docs:"https://docs.rsshub.app/traditional-media.html#ping-guo-xin-wen-wang",
+        source:[ "/realtime/:channel" ],
+        target:(params) => {
+                    if (params.channel === 'forum') {
+                        return '/appledaily/:channel';
+                    }
+                } },
+      { title:"微视频",
+        docs:"https://docs.rsshub.app/traditional-media.html#ping-guo-xin-wen-wang",
+        source:[ "/realtime/:channel" ],
+        target:(params) => {
+                    if (params.channel === 'micromovie') {
+                        return '/appledaily/:channel';
+                    }
+                } } ] },
   "blog.leanstack.com":{ _name:"Ash Maurya's blog",
     ".":[ { title:"Ash Maurya's blog",
         docs:"https://docs.rsshub.app/en/blog.html#ash-maurya",
         source:[ "/" ],
         target:"/ash-maurya" } ] },
+  "atcoder.jp":{ _name:"AtCoder",
+    ".":[ { title:"Posts",
+        docs:"https://docs.rsshub.app/programming.html#atcoder-posts",
+        source:[ "/posts",
+          "/" ],
+        target:(params, url) => `/atcoder/post/${new URL(url).searchParams.get('lang') ?? 'en'}/${new URL(url).searchParams.get('keyword') ?? ''}` },
+      { title:"Contests",
+        docs:"https://docs.rsshub.app/programming.html#atcoder-contests",
+        source:[ "/contests/archive",
+          "/contests",
+          "" ],
+        target:(params, url) =>
+                    `/atcoder/content/${new URL(url).searchParams.get('lang') ?? 'en'}/${new URL(url).searchParams.get('ratedType') ?? '0'}/${new URL(url).searchParams.get('category') ?? '0'}/${
+                        new URL(url).searchParams.get('keyword') ?? ''
+                    }` } ] },
   "bandcamp.com":{ _name:"Bandcamp",
     ".":[ { title:"Upcoming Live Streams",
         docs:"https://docs.rsshub.app/multimedia.html#bandcamp-upcoming-live-streams",
         source:[ "/live_schedule" ],
         target:"/bandcamp/live" } ] },
+  "baozimh.com":{ _name:"包子漫画",
+    www:[ { title:"订阅漫画",
+        docs:"https://docs.rsshub.app/multimedia.html#bandcamp-upcoming-live-streams",
+        source:"/comic/:name",
+        target:"/baozimh/comic/:name" } ] },
+  "barronschina.com.cn":{ _name:"巴伦周刊中文版",
+    ".":[ { title:"栏目",
+        docs:"https://docs.rsshub.app/finance.html#ba-lun-zhou-kan-zhong-wen-ban-lan-mu",
+        source:[ "/" ],
+        target:"/barronschina/:category?" } ] },
   "bendibao.com":{ _name:"本地宝",
     ".":[ { title:"焦点资讯",
         docs:"https://docs.rsshub.app/new-media.html#ben-di-bao-jiao-dian-zi-xun",
@@ -64,6 +402,15 @@
         docs:"https://docs.rsshub.app/university.html#bei-jing-li-gong-da-xue-ren-cai-zhao-pin",
         source:[ "/" ],
         target:"/bit/:category?" } ] },
+  "theblockbeats.info":{ _name:"律动",
+    rszhaopin:[ { title:"快讯",
+        docs:"https://docs.rsshub.app/new-media.html#lu-dong-xin-wen-kuai-xun",
+        source:[ "/" ],
+        target:"/blockbeats/flash" },
+      { title:"新闻",
+        docs:"https://docs.rsshub.app/new-media.html#lu-dong-xin-wen-kuai-xun",
+        source:[ "/" ],
+        target:"/blockbeats/news" } ] },
   "bnu.edu.cn":{ _name:"北京师范大学",
     ".":[ { title:"经济与工商管理学院",
         docs:"https://docs.rsshub.app/universities.html#bei-jing-shi-fan-da-xue-jing-ji-yu-gong-shang-guan-li-xue-yuan",
@@ -129,6 +476,11 @@
         docs:"https://docs.rsshub.app/new-media.html#eprice",
         source:[ "/site/ygzx/whpj/rmbwhpjlspj/index.html?currcode=:id" ],
         target:({ id }) => `/quotation/${id}` } ] },
+  "changba.com":{ _name:"唱吧",
+    ".":[ { title:"用户",
+        docs:"https://docs.rsshub.app/social-media.html#chang-ba",
+        source:[ "/s/:userid" ],
+        target:"/changba/:userid" } ] },
   "chaoxing.com":{ _name:"超星",
     ".":[ { title:"期刊",
         docs:"https://docs.rsshub.app/reading.html#chao-xing-qi-kan",
@@ -158,6 +510,55 @@
         docs:"https://docs.rsshub.app/journal.html#zhong-guo-zhi-wang-wang-luo-shou-fa",
         source:[ "/knavi/journals/:name/detail" ],
         target:"/cnki/journals/debut/:name" } ] },
+  "codeforces.com":{ _name:"Codeforces",
+    www:[ { title:"最新比赛",
+        docs:"https://docs.rsshub.app/programming.html#codeforces-zui-xin-bi-sai",
+        source:[ "/contests" ],
+        target:"/codeforces/contests" } ] },
+  "consumer.org.hk":{ _name:"消费者委员会",
+    ".":[ { title:"文章",
+        docs:"https://docs.rsshub.app/new-media.html#xiao-fei-zhe-wei-yuan-hui-wen-zhang",
+        source:[ "/" ],
+        target:"/consumer/:category?/:language?/:keyword?" } ] },
+  "cool18.com":{ _name:"酷 18",
+    ".":[ { title:"分站",
+        docs:"https://docs.rsshub.app/picture.html#cool-18",
+        source:"/",
+        target:"/cool18/:id?/:type?/:keyword?" } ] },
+  "ey.gov.tw":{ _name:"行政院消费者保护会",
+    cpc:[ { title:"新闻稿",
+        docs:"https://docs.rsshub.app/government.html#tai-wan-xing-zheng-yuan-xiao-fei-zhe-bao-hu-hui",
+        source:"/Page/:type",
+        target:(params) => {
+                    if (params.type === 'A3412E2A5A7B398F') {
+                        return '/cycey/xwg';
+                    }
+                } },
+      { title:"消费资讯",
+        docs:"https://docs.rsshub.app/government.html#tai-wan-xing-zheng-yuan-xiao-fei-zhe-bao-hu-hui",
+        source:"/Page/:type",
+        target:(params) => {
+                    if (params.type === 'E414CC218269CCE8') {
+                        return '/cycey/xfzx';
+                    }
+                } } ] },
+  "cqwu.net":{ _name:"重庆文理学院",
+    www:[ { title:"通知",
+        docs:"https://docs.rsshub.app/university.html#chong-qing-wen-li-xue-yuan",
+        source:"/:type",
+        target:(params) => {
+                    if (params.type === 'channel_7721.html') {
+                        return '/cqwu/news/notify';
+                    }
+                } },
+      { title:"学术活动",
+        docs:"https://docs.rsshub.app/university.html#chong-qing-wen-li-xue-yuan",
+        source:"/:type",
+        target:(params) => {
+                    if (params.type === 'channel_7722.html') {
+                        return '/cqwu/news/academiceve';
+                    }
+                } } ] },
   "csc.edu.cn":{ _name:"国家留学网",
     www:[ { title:"遴选通知",
         docs:"https://docs.rsshub.app/other.html#guo-jia-liu-xue-wang",
@@ -189,6 +590,77 @@
         docs:"https://docs.rsshub.app/programming.html#distill",
         source:[ "/" ],
         target:"/distill" } ] },
+  "docker.com":{ _name:"Docker Hub",
+    hub:[ { title:"镜像有新 Build",
+        docs:"https://docs.rsshub.app/program-update.html#docker-hub",
+        source:[ "/r/:owner/:image",
+          "/r/:owner/:image/tags",
+          "/_/:image" ],
+        target:(params) => `/dockerhub/build/${params.owner ? params.owner : 'library'}/${params.image}` },
+      { title:"镜像有新 Tag",
+        docs:"https://docs.rsshub.app/program-update.html#docker-hub",
+        source:[ "/r/:owner/:image",
+          "/r/:owner/:image/tags",
+          "/_/:image" ],
+        target:(params) => `/dockerhub/tag/${params.owner ? params.owner : 'library'}/${params.image}` } ] },
+  "douban.com":{ _name:"豆瓣",
+    www:[ { title:"用户的广播",
+        docs:"https://docs.rsshub.app/social-media.html#dou-ban",
+        source:"/people/:user/",
+        target:(params, url, document) => {
+                    const uid = document && document.querySelector('html').innerHTML.match(/"id":"([0-9]+)"/)[1];
+                    return uid ? `/douban/people/${uid}/status` : '';
+                } },
+      { title:"小组-最新",
+        docs:"https://docs.rsshub.app/social-media.html#dou-ban",
+        source:"/group/:groupid",
+        target:"/douban/group/:groupid" },
+      { title:"小组-最热",
+        docs:"https://docs.rsshub.app/social-media.html#dou-ban",
+        source:"/group/:groupid",
+        target:"/douban/group/:groupid/essence" },
+      { title:"小组-精华",
+        docs:"https://docs.rsshub.app/social-media.html#dou-ban",
+        source:"/group/:groupid",
+        target:"/douban/group/:groupid/elite" } ],
+    jobs:[ { title:"社会招聘",
+        docs:"https://docs.rsshub.app/social-media.html#dou-ban",
+        source:"/jobs/social",
+        target:"/jobs/social" },
+      { title:"校园招聘",
+        docs:"https://docs.rsshub.app/social-media.html#dou-ban",
+        source:"/jobs/campus",
+        target:"/jobs/campus" },
+      { title:"实习生招聘",
+        docs:"https://docs.rsshub.app/social-media.html#dou-ban",
+        source:"/jobs/intern",
+        target:"/jobs/intern" } ] },
+  "dushu.io":{ _name:"樊登读书会",
+    card:[ { title:"福州运营中心",
+        docs:"https://docs.rsshub.app/new-media.html#fan-deng-du-shu-fan-deng-fu-zhou-yun-ying-zhong-xin",
+        source:[ "*" ],
+        target:"/dushu/fuzhou" } ] },
+  "dushu365.com":{ _name:"樊登读书会",
+    www:[ { title:"福州运营中心",
+        docs:"https://docs.rsshub.app/new-media.html#fan-deng-du-shu-fan-deng-fu-zhou-yun-ying-zhong-xin",
+        source:[ "*" ],
+        target:"/dushu/fuzhou" } ] },
+  "e-hentai.org":{ _name:"E-Hentai",
+    ".":[ { title:"分类",
+        docs:"https://docs.rsshub.app/multimedia.html#e-hentai-fen-lei",
+        source:[ "/:category",
+          "/" ],
+        target:"/e-hentai/category/:category?" },
+      { title:"标签",
+        docs:"https://docs.rsshub.app/multimedia.html#e-hentai-biao-qian",
+        source:[ "/tag/:tag",
+          "/" ],
+        target:"/e-hentai/tag/:tag?" },
+      { title:"搜索",
+        docs:"https://docs.rsshub.app/multimedia.html#e-hentai-sou-suo",
+        source:[ "/:keyword",
+          "/" ],
+        target:"/e-hentai/search/:keyword?" } ] },
   "eastday.com":{ _name:"东方网",
     www:[ { title:"热点搜索",
         docs:"https://docs.rsshub.app/traditional-media.html#dong-fang-wang-re-dian-sou-suo",
@@ -198,6 +670,11 @@
         docs:"https://docs.rsshub.app/traditional-media.html#dong-fang-wang-yuan-chuang",
         source:"/",
         target:"/eastday/portrait" } ] },
+  "jxjy.ecust.edu.cn":{ _name:"华东理工继续教育学院",
+    ".":[ { title:"新闻公告",
+        docs:"https://docs.rsshub.app/university.html#hua-dong-li-gong-ji-xu-jiao-yu-xue-yuan",
+        source:"/yeDaZhuanLan.aspx?pk=153",
+        target:"/ecust-jxjy/news" } ] },
   "sciencedirect.com":{ _name:"ScienceDirect",
     ".":[ { title:"Journal",
         docs:"https://docs.rsshub.app/journal.html#sciencedirect-journal",
@@ -214,12 +691,29 @@
         docs:"https://docs.rsshub.app/new-media.html#eprice",
         source:[ "/" ],
         target:"/eprice/hk" } ] },
+  "eventernote.com":{ _name:"Eventernote",
+    www:[ { title:"声优活动及演唱会",
+        docs:"https://docs.rsshub.app/anime.html#eventernote",
+        source:"/actors/:name/:id/events",
+        target:"/eventernote/actors/:name/:id" } ] },
+  "ezone.hk":{ _name:"ezone.hk",
+    ".":[ { title:"分类",
+        docs:"https://docs.rsshub.app/new-media.html#ezone-hk-fen-lei",
+        source:[ "/:category",
+          "/" ],
+        target:"/ezone/:category?" } ] },
   "filmdeepfocus.com":{ _name:"深焦",
     ".":[ { title:"分类",
         docs:"https://docs.rsshub.app/new-media.html#shen-jiao-fen-lei",
         source:[ "/:category",
           "/" ],
         target:"/filmdeepfocus/:category?" } ] },
+  "firefox.com":{ _name:"Mozilla",
+    monitor:[ { title:"Firefox Monitor",
+        docs:"https://docs.rsshub.app/other.html#mozilla",
+        source:[ "/",
+          "/breaches" ],
+        target:"/firefox/breaches" } ] },
   "fisher.spb.ru":{ _name:"fisher spb",
     ".":[ { title:"news",
         docs:"https://docs.rsshub.app/en/other.html#fisher-spb",
@@ -231,6 +725,20 @@
         source:[ "/:category",
           "/" ],
         target:"/focustaiwan/category?" } ] },
+  "fortunechina.com":{ _name:"财富中文网",
+    ".":[ { title:"分类",
+        docs:"https://docs.rsshub.app/new-media.html#cai-fu-zhong-wen-wang-fen-lei",
+        source:[ "/:category",
+          "/" ],
+        target:"/fortunechina/:category?" } ] },
+  "ftchinese.com":{ _name:"Financial Times",
+    ".":[ { title:"FT 中文网",
+        docs:"https://docs.rsshub.app/traditional-media.html#financial-times" },
+      { title:"myFT 个人 RSS",
+        docs:"https://docs.rsshub.app/traditional-media.html#financial-times" } ] },
+  "ft.com":{ _name:"Financial Times",
+    ".":[ { title:"myFT personal RSS",
+        docs:"https://docs.rsshub.app/en/traditional-media.html#financial-times" } ] },
   "furstar.jp":{ _name:"Furstar",
     ".":[ { title:"安全文摘首頁",
         docs:"https://docs.rsshub.app/shopping.html#an-quan-wen-zhai",
@@ -242,6 +750,12 @@
         docs:"https://docs.rsshub.app/game.html#gameapps-hk-xiang-gang-shou-ji-you-xi-wang",
         source:[ "/" ],
         target:"/gameapps" } ] },
+  "gamer.com.tw":{ _name:"巴哈姆特電玩資訊站",
+    forum:[ { title:"熱門推薦",
+        docs:"https://docs.rsshub.app/bbs.html#ba-ha-mu-te-dian-wan-zi-xun-zhan",
+        source:[ "/A.php",
+          "/B.php" ],
+        target:(params, url) => `/gamer/hot/${new URL(url).searchParams.get('bsn')}` } ] },
   "gamersecret.com":{ _name:"Gamer Secret",
     ".":[ { title:"最新資訊",
         docs:"https://docs.rsshub.app/game.html#gamer-secret-zui-xin-zi-xun",
@@ -278,6 +792,322 @@
         source:[ "/:category",
           "/" ],
         target:"/gf-cn/news/:category?" } ] },
+  "github.com":{ _name:"GitHub",
+    ".":[ { title:"Issues / Pull Requests 评论",
+        docs:"https://docs.rsshub.app/programming.html#github",
+        source:[ "/:user/:repo/:type/:number" ],
+        target:"/github/comments/:user/:repo/:type/:number" },
+      { title:"用户仓库",
+        docs:"https://docs.rsshub.app/programming.html#github",
+        source:"/:user",
+        target:"/github/repos/:user" },
+      { title:"用户 Followers",
+        docs:"https://docs.rsshub.app/programming.html#github",
+        source:"/:user",
+        target:"/github/user/followers/:user" },
+      { title:"Trending",
+        docs:"https://docs.rsshub.app/programming.html#github",
+        source:"/trending",
+        target:"/github/trending/:since" },
+      { title:"Trending",
+        docs:"https://docs.rsshub.app/programming.html#github",
+        source:"/topics",
+        target:"/github/topics/:name/:qs?" },
+      { title:"仓库 Issue",
+        docs:"https://docs.rsshub.app/programming.html#github",
+        source:[ "/:user/:repo/issues",
+          "/:user/:repo/issues/:id",
+          "/:user/:repo" ],
+        target:"/github/issue/:user/:repo" },
+      { title:"仓库 Pull Requests",
+        docs:"https://docs.rsshub.app/programming.html#github",
+        source:[ "/:user/:repo/pulls",
+          "/:user/:repo/pulls/:id",
+          "/:user/:repo" ],
+        target:"/github/pull/:user/:repo" },
+      { title:"仓库 Stars",
+        docs:"https://docs.rsshub.app/programming.html#github",
+        source:[ "/:user/:repo/stargazers",
+          "/:user/:repo" ],
+        target:"/github/stars/:user/:repo" },
+      { title:"仓库 Branches",
+        docs:"https://docs.rsshub.app/programming.html#github",
+        source:[ "/:user/:repo/branches",
+          "/:user/:repo" ],
+        target:"/github/branches/:user/:repo" },
+      { title:"文件 Commits",
+        docs:"https://docs.rsshub.app/programming.html#github",
+        source:"/:user/:repo/blob/:branch/*filepath",
+        target:"/github/file/:user/:repo/:branch/:filepath" },
+      { title:"用户 Starred Repositories",
+        docs:"https://docs.rsshub.app/programming.html#github",
+        source:"/:user",
+        target:"/github/starred_repos/:user" },
+      { title:"仓库 Contributors",
+        docs:"https://docs.rsshub.app/programming.html#github",
+        source:[ "/:user/:repo/graphs/contributors",
+          "/:user/:repo" ],
+        target:"/github/contributors/:user/:repo" } ] },
+  "google.com":{ _name:"谷歌",
+    chrome:[ { title:"插件更新",
+        source:"/webstore/detail/:name/:id",
+        docs:"https://docs.rsshub.app/program-update.html#chrome-wang-shang-ying-yong-dian",
+        target:"/chrome/webstore/extensions/:id" } ],
+    photos:[ { title:"相册",
+        docs:"https://docs.rsshub.app/picture.html#google-xiang-ce",
+        source:"/share/*",
+        target:(params, url, document) => {
+                    const id = document && document.querySelector('html').innerHTML.match(/photos.app.goo.gl\/(.*?)"/)[1];
+                    return id ? `/google/album/${id}` : '';
+                } } ],
+    sites:[ { title:"Sites",
+        docs:"https://docs.rsshub.app/blog.html#google-sites",
+        source:[ "/site/:id/*",
+          "/site/:id" ],
+        target:"/google/sites/:id" } ],
+    fonts:[ { title:"Fonts - Sort by Name",
+        docs:"https://docs.rsshub.app/font.html#google-fonts",
+        source:[ "/" ],
+        target:"/google/fonts/alpha" },
+      { title:"Fonts - Sort by Trending",
+        docs:"https://docs.rsshub.app/font.html#google-fonts",
+        source:[ "/" ],
+        target:"/google/fonts/trending" },
+      { title:"Fonts - Sort by Most Popular",
+        docs:"https://docs.rsshub.app/font.html#google-fonts",
+        source:[ "/" ],
+        target:"/google/fonts/popularity" },
+      { title:"Fonts - Sort by Newest",
+        docs:"https://docs.rsshub.app/font.html#google-fonts",
+        source:[ "/" ],
+        target:"/google/fonts/date" },
+      { title:"Fonts - Sort by Number of Styles",
+        docs:"https://docs.rsshub.app/font.html#google-fonts",
+        source:[ "/" ],
+        target:"/google/fonts/style" } ] },
+  "beijing.gov.cn":{ _name:"北京市人民政府",
+    kw:[ { title:"北京市科委央地协同",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        source:[ "/col/:channel/index.html" ],
+        target:(params) => {
+                    if (params.channel === 'col1132') {
+                        return '/gov/beijing/kw/:channel';
+                    }
+                } },
+      { title:"北京市科委三城一区",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        source:[ "/col/:channel/index.html" ],
+        target:(params) => {
+                    if (params.channel === 'col1134') {
+                        return '/gov/beijing/kw/:channel';
+                    }
+                } },
+      { title:"北京市科委高精尖产业",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        source:[ "/col/:channel/index.html" ],
+        target:(params) => {
+                    if (params.channel === 'col1136') {
+                        return '/gov/beijing/kw/:channel';
+                    }
+                } },
+      { title:"北京市科委开放创新",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        source:[ "/col/:channel/index.html" ],
+        target:(params) => {
+                    if (params.channel === 'col1138') {
+                        return '/gov/beijing/kw/:channel';
+                    }
+                } },
+      { title:"北京市科委深化改革",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        source:[ "/col/:channel/index.html" ],
+        target:(params) => {
+                    if (params.channel === 'col1140') {
+                        return '/gov/beijing/kw/:channel';
+                    }
+                } },
+      { title:"北京市科委内设机构",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        source:[ "/col/:channel/index.html" ],
+        target:(params) => {
+                    if (params.channel === 'col746') {
+                        return '/gov/beijing/kw/:channel';
+                    }
+                } },
+      { title:"北京市科委直属机构",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        source:[ "/col/:channel/index.html" ],
+        target:(params) => {
+                    if (params.channel === 'col748') {
+                        return '/gov/beijing/kw/:channel';
+                    }
+                } },
+      { title:"北京市科委行政许可",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        source:[ "/col/:channel/index.html" ],
+        target:(params) => {
+                    if (params.channel === 'col1520') {
+                        return '/gov/beijing/kw/:channel';
+                    }
+                } },
+      { title:"北京市科委行政处罚",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        source:[ "/col/:channel/index.html" ],
+        target:(params) => {
+                    if (params.channel === 'col1522') {
+                        return '/gov/beijing/kw/:channel';
+                    }
+                } },
+      { title:"北京市科委行政确认",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        source:[ "/col/:channel/index.html" ],
+        target:(params) => {
+                    if (params.channel === 'col1524') {
+                        return '/gov/beijing/kw/:channel';
+                    }
+                } },
+      { title:"北京市科委行政奖励",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        source:[ "/col/:channel/index.html" ],
+        target:(params) => {
+                    if (params.channel === 'col1526') {
+                        return '/gov/beijing/kw/:channel';
+                    }
+                } },
+      { title:"行北京市科委政检查",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        source:[ "/col/:channel/index.html" ],
+        target:(params) => {
+                    if (params.channel === 'col1528') {
+                        return '/gov/beijing/kw/:channel';
+                    }
+                } },
+      { title:"北京市科委其他权力",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        source:[ "/col/:channel/index.html" ],
+        target:(params) => {
+                    if (params.channel === 'col1542') {
+                        return '/gov/beijing/kw/:channel';
+                    }
+                } },
+      { title:"北京市科委最新政策",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        source:[ "/col/:channel/index.html" ],
+        target:(params) => {
+                    if (params.channel === 'col2380') {
+                        return '/gov/beijing/kw/:channel';
+                    }
+                } },
+      { title:"北京市科委科技政策-科技法规规章文件",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        source:[ "/col/:channel/index.html" ],
+        target:(params) => {
+                    if (params.channel === 'col2962' || params.channel === 'col2384') {
+                        return '/gov/beijing/kw/col2384';
+                    }
+                } },
+      { title:"北京市科委科技政策-科委规范性文件",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        source:[ "/col/:channel/index.html" ],
+        target:(params) => {
+                    if (params.channel === 'col2962' || params.channel === 'col2386') {
+                        return '/gov/beijing/kw/col2386';
+                    }
+                } },
+      { title:"北京市科委科技政策-其他科技政策",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        source:[ "/col/:channel/index.html" ],
+        target:(params) => {
+                    if (params.channel === 'col2962' || params.channel === 'col2388') {
+                        return '/gov/beijing/kw/col2388';
+                    }
+                } },
+      { title:"北京市科委国家科技政策",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        source:[ "/col/:channel/index.html" ],
+        target:(params) => {
+                    if (params.channel === 'col2964') {
+                        return '/gov/beijing/kw/:channel';
+                    }
+                } },
+      { title:"北京市科委政策解读",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        source:[ "/col/:channel/index.html" ],
+        target:(params) => {
+                    if (params.channel === 'col2396') {
+                        return '/gov/beijing/kw/:channel';
+                    }
+                } },
+      { title:"北京市科委通知公告",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        source:[ "/col/:channel/index.html" ],
+        target:(params) => {
+                    if (params.channel === 'col736') {
+                        return '/gov/beijing/kw/:channel';
+                    }
+                } },
+      { title:"北京市科委新闻中心",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        source:[ "/col/:channel/index.html" ],
+        target:(params) => {
+                    if (params.channel === 'col6382') {
+                        return '/gov/beijing/kw/:channel';
+                    }
+                } },
+      { title:"北京市科委要闻",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        source:[ "/col/:channel/index.html" ],
+        target:(params) => {
+                    if (params.channel === 'col6344') {
+                        return '/gov/beijing/kw/:channel';
+                    }
+                } },
+      { title:"北京市科委工作动态",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        source:[ "/col/:channel/index.html" ],
+        target:(params) => {
+                    if (params.channel === 'col2330') {
+                        return '/gov/beijing/kw/:channel';
+                    }
+                } },
+      { title:"北京市科委媒体报道",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        source:[ "/col/:channel/index.html" ],
+        target:(params) => {
+                    if (params.channel === 'col2332') {
+                        return '/gov/beijing/kw/:channel';
+                    }
+                } },
+      { title:"北京市科委图片报道",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        source:[ "/col/:channel/index.html" ],
+        target:(params) => {
+                    if (params.channel === 'col6346') {
+                        return '/gov/beijing/kw/:channel';
+                    }
+                } },
+      { title:"北京市科委政府网站年报专栏",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        source:[ "/col/:channel/index.html" ],
+        target:(params) => {
+                    if (params.channel === 'col1008') {
+                        return '/gov/beijing/kw/:channel';
+                    }
+                } } ],
+    wjw:[ { title:"北京卫生健康委员会",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-wei-sheng-jian-kang-wei-yuan-hui",
+        source:"/xwzx_20031/:caty",
+        target:"/gov/beijing/mhc/:caty" } ] },
+  "hrss.sz.gov.cn":{ _name:"深圳考试院",
+    ".":[ { title:"公告",
+        docs:"https://docs.rsshub.app/government.html#guang-dong-sheng-ren-min-zheng-fu-shen-zhen-shi-wei-zu-zhi-bu",
+        source:[ "/*" ],
+        target:"/gov/shenzhen/hrss/szksy/:caty/:page?" } ] },
+  "zzb.sz.gov.cn":{ _name:"深圳组工在线",
+    www:[ { title:"公告",
+        docs:"https://docs.rsshub.app/government.html#guang-dong-sheng-ren-min-zheng-fu-shen-zhen-shi-kao-shi-yuan",
+        source:[ "/*" ],
+        target:"/gov/shenzhen/zzb/:caty/:page?" } ] },
   "rsj.sh.gov.cn":{ _name:"上海市职业能力考试院",
     ".":[ { title:"考试项目",
         docs:"https://docs.rsshub.app/government.html#shang-hai-shi-zhi-ye-neng-li-kao-shi-yuan-kao-shi-xiang-mu",
@@ -302,7 +1132,7 @@
         docs:"https://docs.rsshub.app/programming.html#hacker-news",
         source:[ "/:section",
           "/" ],
-        target:"/hackernews/:section?/:type?" } ] },
+        target:"/hackernews/:section?/:type?/:user?" } ] },
   "hbr.org":{ _name:"Harvard Business Review",
     ".":[ { title:"Topic",
         docs:"https://docs.rsshub.app/new-media.html#harvard-business-review-topic",
@@ -338,11 +1168,26 @@
         docs:"https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue",
         source:"/*",
         target:"/heu/shuisheng/tzgg" } ] },
+  "hex-rays.com":{ _name:"Hex-Rays",
+    ".":[ { title:"Hex-Rays News",
+        docs:"https://docs.rsshub.app/programming.html#hex-rays",
+        source:[ "/",
+          "/blog" ],
+        target:"/hex-rays/news" } ] },
   "hkej.com":{ _name:"信报财经新闻",
     ".":[ { title:"即时新闻",
         docs:"https://docs.rsshub.app/traditional-media.html##xin-bao-cai-jing-xin-wen",
         source:[ "/" ],
         target:"/hkej/:category?" } ] },
+  "hkepc.com":{ _name:"HKEPC",
+    ".":[ { title:"HKEPC 电脑领域",
+        docs:"https://docs.rsshub.app/new-media.html#hkepc",
+        source:[ "/:category?" ],
+        target:"/hkepc/:category?" },
+      { title:"HKEPC 电脑领域",
+        docs:"https://docs.rsshub.app/new-media.html#hkepc",
+        source:[ "/" ],
+        target:"/hkepc" } ] },
   "hket.com":{ _name:"香港经济日报",
     china:[ { title:"新闻",
         docs:"https://docs.rsshub.app/traditional-media.html#xiang-gang-jing-ji-ri-bao",
@@ -410,6 +1255,17 @@
         docs:"https://docs.rsshub.app/shopping.html#hotukdeals",
         source:[ "/" ],
         target:"/hotukdeals/discussed" } ] },
+  "houxu.app":{ _name:"后续",
+    ".":[ { title:"分类",
+        docs:"https://docs.rsshub.app/new-media.html#hou-xu-fen-lei",
+        source:[ "/:category",
+          "/" ],
+        target:"/houxu/:category?" },
+      { title:"Lives",
+        docs:"https://docs.rsshub.app/new-media.html#hou-xu-lives",
+        source:[ "/lives/:id",
+          "/" ],
+        target:"/houxu/lives/:id" } ] },
   "https://www.icac.org.hk":{ _name:"廉政公署",
     ".":[ { title:"新闻公布",
         docs:"https://docs.rsshub.app/government.html#xiang-gang-lian-zheng-gong-shu",
@@ -429,6 +1285,92 @@
         docs:"https://docs.rsshub.app/shopping.html#the-independent",
         source:[ "/extras/indybest/gadgets-tech/video-games-consoles/ps5-stock-uk-restock-live-today-b1938965.html" ],
         target:"/ps5-stock-uk" } ] },
+  "informs.org":{ _name:"INFORMS",
+    pubsonline:[ { title:"Decision Analysis",
+        docs:"https://docs.rsshub.app/journal.html#ieee-xplore",
+        source:[ "/journal/deca",
+          "/toc/deca/0/0" ],
+        target:"/informs/deca" },
+      { title:"Marketing Science",
+        docs:"https://docs.rsshub.app/journal.html#ieee-xplore",
+        source:[ "/journal/mksc",
+          "/toc/mksc/0/0" ],
+        target:"/informs/mksc" },
+      { title:"Information Systems Research",
+        docs:"https://docs.rsshub.app/journal.html#ieee-xplore",
+        source:[ "/journal/isrc",
+          "/toc/isrc/0/0" ],
+        target:"/informs/isrc" },
+      { title:"Mathematics of Operations Research",
+        docs:"https://docs.rsshub.app/journal.html#ieee-xplore",
+        source:[ "/journal/moor",
+          "/toc/moor/0/0" ],
+        target:"/informs/moor" },
+      { title:"INFORMS Journal on Applied Analytics",
+        docs:"https://docs.rsshub.app/journal.html#ieee-xplore",
+        source:[ "/journal/inte",
+          "/toc/inte/0/0" ],
+        target:"/informs/inte" },
+      { title:"Operations Research",
+        docs:"https://docs.rsshub.app/journal.html#ieee-xplore",
+        source:[ "/journal/opre",
+          "/toc/opre/0/0" ],
+        target:"/informs/opre" },
+      { title:"INFORMS Journal on Computing",
+        docs:"https://docs.rsshub.app/journal.html#ieee-xplore",
+        source:[ "/journal/ijoc",
+          "/toc/ijoc/0/0" ],
+        target:"/informs/ijoc" },
+      { title:"Organization Science",
+        docs:"https://docs.rsshub.app/journal.html#ieee-xplore",
+        source:[ "/journal/orsc",
+          "/toc/orsc/0/0" ],
+        target:"/informs/orsc" },
+      { title:"INFORMS Journal on Data Science",
+        docs:"https://docs.rsshub.app/journal.html#ieee-xplore",
+        source:[ "/journal/ijds",
+          "/toc/ijds/0/0" ],
+        target:"/informs/ijds" },
+      { title:"Service Science",
+        docs:"https://docs.rsshub.app/journal.html#ieee-xplore",
+        source:[ "/journal/serv",
+          "/toc/serv/0/0" ],
+        target:"/informs/serv" },
+      { title:"INFORMS Journal on Optimization",
+        docs:"https://docs.rsshub.app/journal.html#ieee-xplore",
+        source:[ "/journal/ijoo",
+          "/toc/ijoo/0/0" ],
+        target:"/informs/ijoo" },
+      { title:"Stochastic Systems",
+        docs:"https://docs.rsshub.app/journal.html#ieee-xplore",
+        source:[ "/journal/stsy",
+          "/toc/stsy/0/0" ],
+        target:"/informs/stsy" },
+      { title:"INFORMS Transactions on Education",
+        docs:"https://docs.rsshub.app/journal.html#ieee-xplore",
+        source:[ "/journal/ited",
+          "/toc/ited/0/0" ],
+        target:"/informs/ited" },
+      { title:"Strategy Science",
+        docs:"https://docs.rsshub.app/journal.html#ieee-xplore",
+        source:[ "/journal/stsc",
+          "/toc/stsc/0/0" ],
+        target:"/informs/stsc" },
+      { title:"Management Science",
+        docs:"https://docs.rsshub.app/journal.html#ieee-xplore",
+        source:[ "/journal/mnsc",
+          "/toc/mnsc/0/0" ],
+        target:"/informs/mnsc" },
+      { title:"Transportation Science",
+        docs:"https://docs.rsshub.app/journal.html#ieee-xplore",
+        source:[ "/journal/trsc",
+          "/toc/trsc/0/0" ],
+        target:"/informs/trsc" },
+      { title:"Manufacturing & Service Operations Management",
+        docs:"https://docs.rsshub.app/journal.html#ieee-xplore",
+        source:[ "/journal/msom",
+          "/toc/msom/0/0" ],
+        target:"/informs/msom" } ] },
   "ithome.com":{ _name:"IT 之家",
     ".":[ { title:"24 小时阅读榜",
         docs:"https://docs.rsshub.app/new-media.html#it-zhi-jia",
@@ -477,6 +1419,15 @@
         docs:"https://docs.rsshub.app/new-media.html#it-zhi-jia",
         source:"/",
         target:"/ithome/next" } ] },
+  "iwara.tv":{ _name:"iwara",
+    ecchi:[ { title:"用户视频",
+        docs:"",
+        source:"/users/:username",
+        target:"/iwara/users/:username?/video" },
+      { title:"用户图片",
+        docs:"",
+        source:"/users/:username",
+        target:"/iwara/users/:username?/image" } ] },
   "jandan.net":{ _name:"煎蛋",
     ".":[ { title:"首页",
         docs:"https://docs.rsshub.app/picture.html#jian-dan-shou-ye",
@@ -579,6 +1530,30 @@
         source:[ "/",
           "/topics/影音專區" ],
         target:"/knowmedia/yyzq" } ] },
+  "lanqiao.cn":{ _name:"蓝桥云课",
+    ".":[ { title:"作者发布的课程",
+        docs:"https://docs.rsshub.app/programming.html#lan-qiao-yun-ke-zuo-zhe-fa-bu-de-ke-cheng",
+        source:[ "/users/:uid" ],
+        target:"/lanqiao/author/:uid" },
+      { title:"最新发布的课程",
+        docs:"https://docs.rsshub.app/programming.html#lan-qiao-yun-ke-zuo-zhe-fa-bu-de-ke-cheng",
+        source:[ "/courses/" ],
+        target:"/lanqiao/courses/all" },
+      { title:"最新发布的课程",
+        docs:"https://docs.rsshub.app/programming.html#lan-qiao-yun-ke-she-qu-zui-xin-ji-shu-wen-da",
+        source:[ "/questions/",
+          "/questions/topics/:id" ],
+        target:"/lanqiao/questions/:id" } ] },
+  "latepost.com":{ _name:"晚点 Latepost",
+    ".":[ { title:"报道",
+        docs:"https://docs.rsshub.app/new-media.html#wan-dian-latepost-bao-dao",
+        source:"/",
+        target:(params, url) => `/latepost/${new URL(url).searchParams.get('proma')}` } ] },
+  "lativ.com.tw":{ _name:"lativ",
+    www:[ { title:"订阅商品价格",
+        docs:"https://docs.rsshub.app/shopping.html#lativ",
+        source:"/Detail/:id",
+        target:"/lativ/:id" } ] },
   "learnku.com":{ _name:"Learn Ku 社区",
     ".":[ { title:"分区",
         docs:"https://docs.rsshub.app/bbs.html#learnku",
@@ -591,7 +1566,7 @@
         target:"/leiphone" },
       { title:"栏目",
         docs:"https://docs.rsshub.app/new-media.html#lei-feng-wang-lan-mu",
-        source:[ "/:catename" ],
+        source:[ "/category/:catename" ],
         target:"/leiphone/category/:catname" },
       { title:"业界资讯",
         docs:"https://docs.rsshub.app/new-media.html#lei-feng-wang-ye-jie-zi-xun",
@@ -626,6 +1601,31 @@
         source:[ "/c/:category",
           "/" ],
         target:"/literotica/category/:category" } ] },
+  "logonews.cn":{ _name:"LogoNews 标志情报局",
+    ".":[ { title:"首页",
+        docs:"https://docs.rsshub.app/design.html#logonews-biao-zhi-qing-bao-ju-shou-ye",
+        source:[ "/" ],
+        target:"/logonews" },
+      { title:"文章分类",
+        docs:"https://docs.rsshub.app/design.html#logonews-biao-zhi-qing-bao-ju-wen-zhang-fen-lei",
+        source:[ "/category/:category/:type?" ],
+        target:"/logonews/category/:category/:type?" },
+      { title:"文章标签",
+        docs:"https://docs.rsshub.app/design.html#logonews-biao-zhi-qing-bao-ju-wen-zhang-biao-qian",
+        source:[ "/tag/:tag" ],
+        target:"/logonews/tag/:tag" },
+      { title:"作品",
+        docs:"https://docs.rsshub.app/design.html#logonews-biao-zhi-qing-bao-ju-zuo-pin",
+        source:[ "/work" ],
+        target:"/logonews/work" },
+      { title:"作品分类",
+        docs:"https://docs.rsshub.app/design.html#logonews-biao-zhi-qing-bao-ju-zuo-pin-fen-lei",
+        source:[ "/work/categorys/:category" ],
+        target:"/logonews/work/categorys/:category" },
+      { title:"作品标签",
+        docs:"https://docs.rsshub.app/design.html#logonews-biao-zhi-qing-bao-ju-zuo-pin-biao-qian",
+        source:[ "/work/tags/:tag" ],
+        target:"/logonews/work/tags/:tag" } ] },
   "medsci.cn":{ _name:"梅斯医学",
     ".":[ { title:"资讯",
         docs:"https://docs.rsshub.app/new-media.html#mei-si-yi-xue-zi-xun",
@@ -757,6 +1757,108 @@
         docs:"https://docs.rsshub.app/new-media.html#ngocn2-fen-lei",
         source:[ "/" ],
         target:"/ngocn2/:category?" } ] },
+  "nifd.cn":{ _name:"国家金融与发展实验室",
+    www:[ { title:"周报",
+        docs:"https://docs.rsshub.app/finance.html#guo-jia-jin-rong-yu-fa-zhan-shi-yan-shi-yan-jiu",
+        source:[ "/Research" ],
+        target:(_, url) => {
+                    const categoryGuid = new URL(url).searchParams.get('categoryGuid');
+                    if (categoryGuid === '7a6a826d-b525-42aa-b550-4236e524227f') {
+                        return `/nifd/research/${categoryGuid}`;
+                    }
+                } },
+      { title:"双周刊",
+        docs:"https://docs.rsshub.app/finance.html#guo-jia-jin-rong-yu-fa-zhan-shi-yan-shi-yan-jiu",
+        source:[ "/Research" ],
+        target:(_, url) => {
+                    const categoryGuid = new URL(url).searchParams.get('categoryGuid');
+                    if (categoryGuid === '128d602c-7041-4546-beff-83e605f8a370') {
+                        return `/nifd/research/${categoryGuid}`;
+                    }
+                } },
+      { title:"月报",
+        docs:"https://docs.rsshub.app/finance.html#guo-jia-jin-rong-yu-fa-zhan-shi-yan-shi-yan-jiu",
+        source:[ "/Research" ],
+        target:(_, url) => {
+                    const categoryGuid = new URL(url).searchParams.get('categoryGuid');
+                    if (categoryGuid === '0712e220-fa3b-44d4-9226-bc3d57944e19') {
+                        return `/nifd/research/${categoryGuid}`;
+                    }
+                } },
+      { title:"季报",
+        docs:"https://docs.rsshub.app/finance.html#guo-jia-jin-rong-yu-fa-zhan-shi-yan-shi-yan-jiu",
+        source:[ "/Research" ],
+        target:(_, url) => {
+                    const categoryGuid = new URL(url).searchParams.get('categoryGuid');
+                    if (categoryGuid === 'b66aa691-87ee-4bfe-ac6b-2460386166ee') {
+                        return `/nifd/research/${categoryGuid}`;
+                    }
+                } },
+      { title:"年报",
+        docs:"https://docs.rsshub.app/finance.html#guo-jia-jin-rong-yu-fa-zhan-shi-yan-shi-yan-jiu",
+        source:[ "/Research" ],
+        target:(_, url) => {
+                    const categoryGuid = new URL(url).searchParams.get('categoryGuid');
+                    if (categoryGuid === 'c714853a-f09e-4510-8835-30a448fff7e3') {
+                        return `/nifd/research/${categoryGuid}`;
+                    }
+                } },
+      { title:"课题报告",
+        docs:"https://docs.rsshub.app/finance.html#guo-jia-jin-rong-yu-fa-zhan-shi-yan-shi-yan-jiu",
+        source:[ "/Research" ],
+        target:(_, url) => {
+                    const categoryGuid = new URL(url).searchParams.get('categoryGuid');
+                    if (categoryGuid === '17d0b29b-7912-498a-b9c3-d30508220158') {
+                        return `/nifd/research/${categoryGuid}`;
+                    }
+                } },
+      { title:"学术论文",
+        docs:"https://docs.rsshub.app/finance.html#guo-jia-jin-rong-yu-fa-zhan-shi-yan-shi-yan-jiu",
+        source:[ "/Research" ],
+        target:(_, url) => {
+                    const categoryGuid = new URL(url).searchParams.get('categoryGuid');
+                    if (categoryGuid === 'e6a6d3a5-4bda-4739-9765-e4e41c900bcc') {
+                        return `/nifd/research/${categoryGuid}`;
+                    }
+                } },
+      { title:"工作论文",
+        docs:"https://docs.rsshub.app/finance.html#guo-jia-jin-rong-yu-fa-zhan-shi-yan-shi-yan-jiu",
+        source:[ "/Research" ],
+        target:(_, url) => {
+                    const categoryGuid = new URL(url).searchParams.get('categoryGuid');
+                    if (categoryGuid === '3d23ba0e-4f46-44c2-9d21-6b38df4cdd70') {
+                        return `/nifd/research/${categoryGuid}`;
+                    }
+                } },
+      { title:"研究评论",
+        docs:"https://docs.rsshub.app/finance.html#guo-jia-jin-rong-yu-fa-zhan-shi-yan-shi-yan-jiu",
+        source:[ "/Research" ],
+        target:(_, url) => {
+                    const categoryGuid = new URL(url).searchParams.get('categoryGuid');
+                    if (categoryGuid === '3333d2af-91d6-429b-be83-28b92f31b6d7') {
+                        return `/nifd/research/${categoryGuid}`;
+                    }
+                } },
+      { title:"其他报告",
+        docs:"https://docs.rsshub.app/finance.html#guo-jia-jin-rong-yu-fa-zhan-shi-yan-shi-yan-jiu",
+        source:[ "/Research" ],
+        target:(_, url) => {
+                    const categoryGuid = new URL(url).searchParams.get('categoryGuid');
+                    if (categoryGuid === '6363bdc7-3e1b-4771-a904-6162cd3a3143') {
+                        return `/nifd/research/${categoryGuid}`;
+                    }
+                } } ] },
+  "nikkei.com":{ _name:"日本経済新聞",
+    www:[ { title:"ホームページ",
+        docs:"https://docs.rsshub.app/traditional-media.html#ri-ben-jing-ji-xin-wen",
+        source:"/",
+        target:"/nikkei/index" } ] },
+  "nippon.com":{ _name:"走进日本",
+    www:[ { title:"政治外交",
+        docs:"https://docs.rsshub.app/travel.html#zou-jin-ri-ben",
+        source:[ "/nippon/:category?",
+          "/cn" ],
+        target:"/nippon/:category?" } ] },
   "nju.edu.cn":{ _name:"南京大学",
     jw:[ { title:"本科生院",
         docs:"https://docs.rsshub.app/university.html#nan-jing-da-xue-ben-ke-sheng-yuan",
@@ -810,6 +1912,46 @@
         docs:"https://docs.rsshub.app/other.html#guo-jia-zi-ran-ke-xue-ji-jin-wei-yuan-hui",
         source:"/*",
         target:"/nsfc/news/kpkx" } ] },
+  "odaily.news":{ _name:"Odaily 星球日报",
+    ".":[ { title:"快讯",
+        docs:"https://docs.rsshub.app/new-media.html#odaily-xing-qiu-ri-bao-kuai-xun",
+        source:[ "/newsflash",
+          "/" ],
+        target:"/odaily/newsflash" },
+      { title:"文章",
+        docs:"https://docs.rsshub.app/new-media.html#odaily-xing-qiu-ri-bao-wen-zhang",
+        source:[ "/" ],
+        target:"/odaily/:id?" },
+      { title:"用户文章",
+        docs:"https://docs.rsshub.app/new-media.html#odaily-xing-qiu-ri-bao-yong-hu-wen-zhang",
+        source:[ "/user/:id",
+          "/" ],
+        target:"/odaily/user/:id" },
+      { title:"活动",
+        docs:"https://docs.rsshub.app/new-media.html#odaily-xing-qiu-ri-bao-huo-dong",
+        source:[ "/activityPage",
+          "/" ],
+        target:"/odaily/activity" } ] },
+  "0daily.com":{ _name:"Odaily 星球日报",
+    ".":[ { title:"快讯",
+        docs:"https://docs.rsshub.app/new-media.html#odaily-xing-qiu-ri-bao-kuai-xun",
+        source:[ "/newsflash",
+          "/" ],
+        target:"/odaily/newsflash" },
+      { title:"文章",
+        docs:"https://docs.rsshub.app/new-media.html#odaily-xing-qiu-ri-bao-wen-zhang",
+        source:[ "/" ],
+        target:"/odaily/:id?" },
+      { title:"用户文章",
+        docs:"https://docs.rsshub.app/new-media.html#odaily-xing-qiu-ri-bao-yong-hu-wen-zhang",
+        source:[ "/user/:id",
+          "/" ],
+        target:"/odaily/user/:id" },
+      { title:"活动",
+        docs:"https://docs.rsshub.app/new-media.html#odaily-xing-qiu-ri-bao-huo-dong",
+        source:[ "/activityPage",
+          "/" ],
+        target:"/odaily/activity" } ] },
   "on.cc":{ _name:"东网",
     hk:[ { title:"港澳",
         docs:"https://docs.rsshub.app/other.html#guo-jia-zi-ran-ke-xue-ji-jin-wei-yuan-hui",
@@ -836,7 +1978,11 @@
         source:[ "/hk/finance/index.html",
           "/hk/finance/index_cn.html" ],
         target:"/oncc/zh-hans/finance" } ] },
-  "people.com":{ _name:"人民网",
+  "people.com.cn":{ _name:"人民网",
+    ".":[ { title:"通用",
+        docs:"https://docs.rsshub.app/traditional-media.html#ren-min-wang-tong-yong",
+        source:"/",
+        target:"/people/:site?/:category?" } ],
     liuyan:[ { title:"领导留言板",
         docs:"https://docs.rsshub.app/traditional-media.html#ren-min-wang-ling-dao-liu-yan-ban",
         source:"/",
@@ -846,6 +1992,11 @@
         docs:"https://docs.rsshub.app/university.html#bei-jing-da-xue-ren-shi-chu",
         source:[ "/" ],
         target:"/pku/hr/:category?" } ] },
+  "producthunt.com":{ _name:"Product Hunt",
+    www:[ { title:"Today Popular",
+        docs:"https://docs.rsshub.app/other.html#product-hunt",
+        source:[ "/" ],
+        target:"/producthunt/today" } ] },
   "pts.org.tw":{ _name:"公視新聞網 PNN",
     news:[ { title:"即時",
         docs:"https://docs.rsshub.app/traditional-media.html#gong-shi-xin-wen-wang-ji-shi-xin-wen",
@@ -895,6 +2046,12 @@
         docs:"https://docs.rsshub.app/multimedia.html#teng-xun-shi-pin",
         source:"/x/cover/:id/:detail",
         target:"/tencentvideo/playlist/:id" } ] },
+  "ici.radio-canada.ca":{ _name:"Radio Canada",
+    ".":[ { title:"Latest News",
+        docs:"https://docs.rsshub.app/new-media.html#jia-na-da-guo-ji-guang-bo-dian-tai-zui-xin-xiao-xi",
+        source:[ "/rci/:lang",
+          "/" ],
+        target:"/radio-canada/latest/:language?" } ] },
   "rfi.fr":{ _name:"法国国际广播电台",
     ".":[ { title:"滚动新闻",
         docs:"https://docs.rsshub.app/multimedia.html#fa-guo-guo-ji-guang-bo-dian-tai-gun-dong-xin-wen",
@@ -993,12 +2150,23 @@
         docs:"https://docs.rsshub.app/traditional-media.html#solidot",
         source:[ "/" ],
         target:"/solidot/story" } ] },
+  "ssm.gov.mo":{ _name:"澳门卫生局",
+    www:[ { title:"最新消息",
+        docs:"https://docs.rsshub.app/government.html#ao-men-wei-sheng-ju-zui-xin-xiao-xi",
+        source:[ "/",
+          "/portal" ],
+        target:"/ssm/news" } ] },
   "startuplatte.com":{ _name:"創新拿鐵",
     ".":[ { title:"分类",
         docs:"https://docs.rsshub.app/new-media.html#chuang-xin-na-tie-fen-lei",
         source:[ "/category/:category",
           "/" ],
         target:"/startuplatte/:category?" } ] },
+  "storm.mg":{ _name:"風傳媒",
+    ".":[ { title:"分类",
+        docs:"https://docs.rsshub.app/new-media.html#feng-chuan-mei",
+        source:[ "/:category/:id" ],
+        target:"/storm/:category?/:id?" } ] },
   "subhd.tv":{ _name:"Sub HD",
     ".":[ { title:"字幕",
         docs:"https://docs.rsshub.app/multimedia.html#subhd-zi-mu",
@@ -1022,6 +2190,114 @@
         source:[ "/lawrules/rule/new",
           "/" ],
         target:"/szse/rule" } ] },
+  "taobao.com":{ _name:"淘宝",
+    izhongchou:[ { title:"淘宝众筹全部",
+        docs:"https://docs.rsshub.app/shopping.html#tao-bao-zhong-chou-zhong-chou-xiang-mu",
+        source:[ "/list.htm" ],
+        target:(params, url) => {
+                    if (new URLSearchParams(new URL(url).search).get('type') === '') {
+                        return '/taobao/zhongchou/all';
+                    }
+                } },
+      { title:"淘宝众筹科技",
+        docs:"https://docs.rsshub.app/shopping.html#tao-bao-zhong-chou-zhong-chou-xiang-mu",
+        source:[ "/list.htm" ],
+        target:(params, url) => {
+                    if (new URLSearchParams(new URL(url).search).get('type') === '121288001') {
+                        return '/taobao/zhongchou/tech';
+                    }
+                } },
+      { title:"淘宝众筹食品",
+        docs:"https://docs.rsshub.app/shopping.html#tao-bao-zhong-chou-zhong-chou-xiang-mu",
+        source:[ "/list.htm" ],
+        target:(params, url) => {
+                    if (new URLSearchParams(new URL(url).search).get('type') === '123330001,125672021') {
+                        return '/taobao/zhongchou/agriculture';
+                    }
+                } },
+      { title:"淘宝众筹动漫",
+        docs:"https://docs.rsshub.app/shopping.html#tao-bao-zhong-chou-zhong-chou-xiang-mu",
+        source:[ "/list.htm" ],
+        target:(params, url) => {
+                    if (new URLSearchParams(new URL(url).search).get('type') === '122018001') {
+                        return '/taobao/zhongchou/acg';
+                    }
+                } },
+      { title:"淘宝众筹设计",
+        docs:"https://docs.rsshub.app/shopping.html#tao-bao-zhong-chou-zhong-chou-xiang-mu",
+        source:[ "/list.htm" ],
+        target:(params, url) => {
+                    if (new URLSearchParams(new URL(url).search).get('type') === '121292001,126176002,126202001') {
+                        return '/taobao/zhongchou/design';
+                    }
+                } },
+      { title:"淘宝众筹公益",
+        docs:"https://docs.rsshub.app/shopping.html#tao-bao-zhong-chou-zhong-chou-xiang-mu",
+        source:[ "/list.htm" ],
+        target:(params, url) => {
+                    if (new URLSearchParams(new URL(url).search).get('type') === '121280001') {
+                        return '/taobao/zhongchou/love';
+                    }
+                } },
+      { title:"淘宝众筹娱乐",
+        docs:"https://docs.rsshub.app/shopping.html#tao-bao-zhong-chou-zhong-chou-xiang-mu",
+        source:[ "/list.htm" ],
+        target:(params, url) => {
+                    if (new URLSearchParams(new URL(url).search).get('type') === '121284001') {
+                        return '/taobao/zhongchou/tele';
+                    }
+                } },
+      { title:"淘宝众筹影音",
+        docs:"https://docs.rsshub.app/shopping.html#tao-bao-zhong-chou-zhong-chou-xiang-mu",
+        source:[ "/list.htm" ],
+        target:(params, url) => {
+                    if (new URLSearchParams(new URL(url).search).get('type') === '121278001') {
+                        return '/taobao/zhongchou/music';
+                    }
+                } },
+      { title:"淘宝众筹书籍",
+        docs:"https://docs.rsshub.app/shopping.html#tao-bao-zhong-chou-zhong-chou-xiang-mu",
+        source:[ "/list.htm" ],
+        target:(params, url) => {
+                    if (new URLSearchParams(new URL(url).search).get('type') === '121274002') {
+                        return '/taobao/zhongchou/book';
+                    }
+                } },
+      { title:"淘宝众筹游戏",
+        docs:"https://docs.rsshub.app/shopping.html#tao-bao-zhong-chou-zhong-chou-xiang-mu",
+        source:[ "/list.htm" ],
+        target:(params, url) => {
+                    if (new URLSearchParams(new URL(url).search).get('type') === '122020001') {
+                        return '/taobao/zhongchou/game';
+                    }
+                } },
+      { title:"淘宝众筹其他",
+        docs:"https://docs.rsshub.app/shopping.html#tao-bao-zhong-chou-zhong-chou-xiang-mu",
+        source:[ "/list.htm" ],
+        target:(params, url) => {
+                    if (new URLSearchParams(new URL(url).search).get('type') === '125706031,125888001,125886001,123332001') {
+                        return '/taobao/zhongchou/other';
+                    }
+                } } ] },
+  "t.me":{ _name:"Telegram",
+    ".":[ { title:"频道",
+        docs:"https://docs.rsshub.app/social-media.html#telegram",
+        source:"/:username",
+        target:(params, url, document) => {
+                    const isChannel = document && document.querySelector('.tgme_action_button_label');
+                    if (isChannel) {
+                        return '/telegram/channel/:username';
+                    }
+                } },
+      { title:"频道",
+        docs:"https://docs.rsshub.app/social-media.html#telegram",
+        source:"/s/:username",
+        target:"/telegram/channel/:username" } ] },
+  "telegram.org":{ _name:"Telegram",
+    ".":[ { title:"Telegram Blog",
+        docs:"https://docs.rsshub.app/social-media.html#telegram-telegram-blog",
+        source:"/blog",
+        target:"/telegram/blog" } ] },
   "timednews.com":{ _name:"时刻新闻",
     ".":[ { title:"新闻",
         docs:"https://docs.rsshub.app/new-media.html#shi-ke-xin-wen",
@@ -1071,6 +2347,12 @@
 
                     return `/timednews/news/${name}`;
                 } } ] },
+  "topys.cn":{ _name:"TOPYS",
+    ".":[ { title:"关键字",
+        docs:"https://docs.rsshub.app/new-media.html#topys-guan-jian-zi",
+        source:[ "/search/:keyword",
+          "/" ],
+        target:"/topys/:keyword?" } ] },
   "trow.cc":{ _name:"The Ring of Wonder",
     ".":[ { title:"首页更新",
         docs:"https://docs.rsshub.app/bbs.html#the-ring-of-wonder",
@@ -1205,6 +2487,22 @@
         docs:"https://docs.rsshub.app/reading.html#qing-xiao-shuo-wen-ku-zui-xin-juan",
         source:[ "/book/:id" ],
         target:(params) => `/wenku8/volume/${params.id.split('.')[0]}` } ] },
+  "whoscall.com":{ _name:"Whoscall",
+    ".":[ { title:"最新文章",
+        docs:"https://docs.rsshub.app/blog.html#whoscall-zui-xin-wen-zhang",
+        source:[ "/zh-hant/blog/articles",
+          "/" ],
+        target:"/whoscall" },
+      { title:"分類",
+        docs:"https://docs.rsshub.app/blog.html#whoscall-fen-lei",
+        source:[ "/zh-hant/blog/categories/:category",
+          "/" ],
+        target:"/whoscall/categories/:category?" },
+      { title:"標籤",
+        docs:"https://docs.rsshub.app/blog.html#whoscall-biao-qian",
+        source:[ "/zh-hant/blog/tags/:tag",
+          "/" ],
+        target:"/whoscall/tags/:tag?" } ] },
   "wsyu.edu.cn":{ _name:"新闻中心",
     www:[ { title:"学校要闻",
         docs:"https://docs.rsshub.app/other.html#wu-chang-shou-yi-xue-yuan",
@@ -1221,11 +2519,82 @@
   "wzu.edu.cn":{ _name:"温州大学",
     ".":[ { title:"温州大学 - 主站新闻",
         docs:"https://docs.rsshub.app/university.html#wen-zhou-da-xue" } ] },
+  "xaut.edu.cn":{ _name:"西安理工大学",
+    index:[ { title:"学校官网",
+        docs:"https://docs.rsshub.app/university.html#xi-an-li-gong-da-xue" } ],
+    jwc:[ { title:"教务处",
+        docs:"https://docs.rsshub.app/university.html#xi-an-li-gong-da-xue" } ],
+    rsc:[ { title:"人事处",
+        docs:"https://docs.rsshub.app/university.html#xi-an-li-gong-da-xue" } ] },
   "yaohuo.me":{ _name:"妖火",
     ".":[ { title:"首页",
         docs:"https://docs.rsshub.app/new-media.html#yao-huo-shou-ye",
         source:[ "/" ],
         target:"/yaohuo" } ] },
+  "myzaker.com":{ _name:"ZAKER",
+    ".":[ { title:"分类",
+        docs:"https://docs.rsshub.app/new-media.html#zaker",
+        source:[ "/:type/:id" ],
+        target:"/zaker/:type/:id" },
+      { title:"精读",
+        docs:"https://docs.rsshub.app/new-media.html#zaker",
+        source:[ "/" ],
+        target:"/zaker/focusread" } ] },
+  "zaobao.com":{ _name:"联合早报",
+    www:[ { title:"新闻-新加坡",
+        docs:"https://docs.rsshub.app/traditional-media.html#lian-he-zao-bao-xin-wen",
+        source:[ "/",
+          "/news",
+          "/news/singapore" ],
+        target:"/zaobao/znews/singapore" },
+      { title:"新闻-中国",
+        docs:"https://docs.rsshub.app/traditional-media.html#lian-he-zao-bao-xin-wen",
+        source:[ "/",
+          "/news",
+          "/news/china" ],
+        target:"/zaobao/znews/china" },
+      { title:"新闻-国际",
+        docs:"https://docs.rsshub.app/traditional-media.html#lian-he-zao-bao-xin-wen",
+        source:[ "/",
+          "/news",
+          "/news/world" ],
+        target:"/zaobao/znews/world" } ] },
+  "zaobao.com.sg":{ _name:"联合早报",
+    www:[ { title:"新闻-新加坡",
+        docs:"https://docs.rsshub.app/traditional-media.html#lian-he-zao-bao-xin-wen",
+        source:[ "/",
+          "/news",
+          "/news/singapore" ],
+        target:"/zaobao/znews/singapore" },
+      { title:"新闻-中国",
+        docs:"https://docs.rsshub.app/traditional-media.html#lian-he-zao-bao-xin-wen",
+        source:[ "/",
+          "/news",
+          "/news/china" ],
+        target:"/zaobao/znews/china" },
+      { title:"新闻-国际",
+        docs:"https://docs.rsshub.app/traditional-media.html#lian-he-zao-bao-xin-wen",
+        source:[ "/",
+          "/news",
+          "/news/world" ],
+        target:"/zaobao/znews/world" } ] },
+  "zjgtjy.cn":{ _name:"浙江省土地使用权网上交易系统",
+    ".":[ { title:"全部更新",
+        docs:"https://docs.rsshub.app/government.html",
+        source:"/",
+        target:"/zjgtjy/all" },
+      { title:"挂牌公告",
+        docs:"https://docs.rsshub.app/government.html",
+        source:"/",
+        target:"/zjgtjy/gpgg" },
+      { title:"拍卖公告",
+        docs:"https://docs.rsshub.app/government.html",
+        source:"/",
+        target:"/zjgtjy/pmgg" },
+      { title:"补充公告",
+        docs:"https://docs.rsshub.app/government.html",
+        source:"/",
+        target:"/zjgtjy/bcgg" } ] },
   "bilibili.com":{ _name:"bilibili",
     www:[ { title:"分区视频",
         docs:"https://docs.rsshub.app/social-media.html#bilibili",
@@ -1384,58 +2753,6 @@
         docs:"https://docs.rsshub.app/social-media.html#youtube",
         source:"/playlist",
         target:(params, url) => `/youtube/playlist/${new URL(url).searchParams.get('list')}` } ] },
-  "github.com":{ _name:"GitHub",
-    ".":[ { title:"用户仓库",
-        docs:"https://docs.rsshub.app/programming.html#github",
-        source:"/:user",
-        target:"/github/repos/:user" },
-      { title:"用户 Followers",
-        docs:"https://docs.rsshub.app/programming.html#github",
-        source:"/:user",
-        target:"/github/user/followers/:user" },
-      { title:"Trending",
-        docs:"https://docs.rsshub.app/programming.html#github",
-        source:"/trending",
-        target:"/github/trending/:since" },
-      { title:"Trending",
-        docs:"https://docs.rsshub.app/programming.html#github",
-        source:"/topics",
-        target:"/github/topics/:name/:qs?" },
-      { title:"仓库 Issue",
-        docs:"https://docs.rsshub.app/programming.html#github",
-        source:[ "/:user/:repo/issues",
-          "/:user/:repo/issues/:id",
-          "/:user/:repo" ],
-        target:"/github/issue/:user/:repo" },
-      { title:"仓库 Pull Requests",
-        docs:"https://docs.rsshub.app/programming.html#github",
-        source:[ "/:user/:repo/pulls",
-          "/:user/:repo/pulls/:id",
-          "/:user/:repo" ],
-        target:"/github/pull/:user/:repo" },
-      { title:"仓库 Stars",
-        docs:"https://docs.rsshub.app/programming.html#github",
-        source:[ "/:user/:repo/stargazers",
-          "/:user/:repo" ],
-        target:"/github/stars/:user/:repo" },
-      { title:"仓库 Branches",
-        docs:"https://docs.rsshub.app/programming.html#github",
-        source:[ "/:user/:repo/branches",
-          "/:user/:repo" ],
-        target:"/github/branches/:user/:repo" },
-      { title:"文件 Commits",
-        docs:"https://docs.rsshub.app/programming.html#github",
-        source:"/:user/:repo/blob/:branch/*filepath",
-        target:"/github/file/:user/:repo/:branch/:filepath" },
-      { title:"用户 Starred Repositories",
-        docs:"https://docs.rsshub.app/programming.html#github",
-        source:"/:user",
-        target:"/github/starred_repos/:user" },
-      { title:"仓库 Contributors",
-        docs:"https://docs.rsshub.app/programming.html#github",
-        source:[ "/:user/:repo/graphs/contributors",
-          "/:user/:repo" ],
-        target:"/github/contributors/:user/:repo" } ] },
   "zhihu.com":{ _name:"知乎",
     www:[ { title:"收藏夹",
         docs:"https://docs.rsshub.app/social-media.html#zhi-hu",
@@ -1707,13 +3024,6 @@
         docs:"https://docs.rsshub.app/game.html#epicgames-freegame",
         source:"/store/zh-CN/free-games",
         target:"/epicgames/freegames" } ] },
-  "docker.com":{ _name:"Docker",
-    hub:[ { title:"镜像有新 Build",
-        docs:"https://docs.rsshub.app/program-update.html#docker-hub",
-        source:[ "/r/:owner/:image",
-          "/r/:owner/:image/tags",
-          "/_/:image" ],
-        target:(params) => `/dockerhub/build/${params.owner ? params.owner : 'library'}/${params.image}` } ] },
   "nga.cn":{ _name:"NGA",
     bbs:[ { title:"分区帖子",
         docs:"https://docs.rsshub.app/bbs.html#nga",
@@ -1890,11 +3200,6 @@
         docs:"https://docs.rsshub.app/multimedia.html#mqube",
         source:"/search/tag/:tag",
         target:"/mqube/tag/:tag" } ] },
-  "nikkei.com":{ _name:"日本経済新聞",
-    www:[ { title:"ホームページ",
-        docs:"https://docs.rsshub.app/traditional-media.html#ri-ben-jing-ji-xin-wen",
-        source:"/",
-        target:"/nikkei/index" } ] },
   "last.fm":{ _name:"Last.fm",
     www:[ { title:"用户播放记录",
         docs:"https://docs.rsshub.app/multimedia.html#last-fm",
@@ -1933,23 +3238,6 @@
                         return `/ddrk/update/${params.name}${params.season ? '/' + params.season : ''}`;
                     }
                 } } ] },
-  "google.com":{ _name:"谷歌",
-    chrome:[ { title:"插件更新",
-        source:"/webstore/detail/:name/:id",
-        docs:"https://docs.rsshub.app/program-update.html#chrome-wang-shang-ying-yong-dian",
-        target:"/chrome/webstore/extensions/:id" } ],
-    photos:[ { title:"相册",
-        docs:"https://docs.rsshub.app/picture.html#google-xiang-ce",
-        source:"/share/*",
-        target:(params, url, document) => {
-                    const id = document && document.querySelector('html').innerHTML.match(/photos.app.goo.gl\/(.*?)"/)[1];
-                    return id ? `/google/album/${id}` : '';
-                } } ],
-    sites:[ { title:"Sites",
-        docs:"https://docs.rsshub.app/blog.html#google-sites",
-        source:[ "/site/:id/*",
-          "/site/:id" ],
-        target:"/google/sites/:id" } ] },
   "javlibrary.com":{ _name:"javlibrary",
     www:[ { title:"新话题",
         docs:"https://docs.rsshub.app/multimedia.html#javlibrary",
@@ -2039,10 +3327,6 @@
         source:[ "/element/:id",
           "/element/:id/article" ],
         target:"/cowlevel/element/:id" } ] },
-  "beijing.gov.cn":{ wjw:[ { title:"北京卫生健康委员会",
-        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-wei-sheng-jian-kang-wei-yuan-hui",
-        source:"/xwzx_20031/:caty",
-        target:"/gov/beijing/mhc/:caty" } ] },
   "ynu.edu.cn":{ _name:"云南大学",
     home:[ { title:"官网消息通告",
         docs:"https://docs.rsshub.app/university.html#yun-nan-da-xue",
@@ -2242,20 +3526,6 @@
         docs:"https://docs.rsshub.app/design.html#zhan-ku",
         source:[ "/u/:id" ],
         target:"/zcool/user/:id" } ] },
-  "t.me":{ _name:"Telegram",
-    ".":[ { title:"频道",
-        docs:"https://docs.rsshub.app/social-media.html#telegram",
-        source:"/:username",
-        target:(params, url, document) => {
-                    const isChannel = document && document.querySelector('.tgme_action_button_label');
-                    if (isChannel) {
-                        return '/telegram/channel/:username';
-                    }
-                } },
-      { title:"频道",
-        docs:"https://docs.rsshub.app/social-media.html#telegram",
-        source:"/s/:username",
-        target:"/telegram/channel/:username" } ] },
   "zhuixinfan.com":{ _name:"追新番日剧站",
     ".":[ { title:"更新列表",
         docs:"https://docs.rsshub.app/multimedia.html#zhui-xin-fan-ri-ju-zhan",
@@ -2511,26 +3781,6 @@
         docs:"https://docs.rsshub.app/traditional-media.html#xiang-gang-01",
         source:"/tag/:id/:title",
         target:"/hk01/tag/:id" } ] },
-  "douban.com":{ _name:"豆瓣",
-    www:[ { title:"用户的广播",
-        docs:"https://docs.rsshub.app/social-media.html#dou-ban",
-        source:"/people/:user/",
-        target:(params, url, document) => {
-                    const uid = document && document.querySelector('html').innerHTML.match(/"id":"([0-9]+)"/)[1];
-                    return uid ? `/douban/people/${uid}/status` : '';
-                } },
-      { title:"小组-最新",
-        docs:"https://docs.rsshub.app/social-media.html#dou-ban",
-        source:"/group/:groupid",
-        target:"/douban/group/:groupid" },
-      { title:"小组-最热",
-        docs:"https://docs.rsshub.app/social-media.html#dou-ban",
-        source:"/group/:groupid",
-        target:"/douban/group/:groupid/essence" },
-      { title:"小组-精华",
-        docs:"https://docs.rsshub.app/social-media.html#dou-ban",
-        source:"/group/:groupid",
-        target:"/douban/group/:groupid/elite" } ] },
   "okjike.com":{ _name:"即刻",
     m:[ { title:"用户动态",
         docs:"https://docs.rsshub.app/social-media.html#ji-ke-yong-hu-dong-tai",
@@ -2660,11 +3910,6 @@
         docs:"https://docs.rsshub.app/new-media.html#matataki",
         source:"/user/:uid/favlist/:fid",
         target:(params) => `/matataki/users/${params.uid}/favorites/${params.fid}/posts` } ] },
-  "eventernote.com":{ _name:"Eventernote",
-    www:[ { title:"声优活动及演唱会",
-        docs:"https://docs.rsshub.app/anime.html#eventernote",
-        source:"/actors/:name/:id/events",
-        target:"/eventernote/actors/:name/:id" } ] },
   "instagram.com":{ _name:"Instagram",
     www:[ { title:"用户",
         docs:"https://docs.rsshub.app/social-media.html#instagram",
@@ -2705,23 +3950,6 @@
     lib:[ { title:"图书馆通知",
         docs:"https://docs.rsshub.app/university.html#chong-qing-li-gong-da-xue",
         source:"/*" } ] },
-  "cqwu.net":{ _name:"重庆文理学院",
-    www:[ { title:"通知",
-        docs:"https://docs.rsshub.app/university.html#chong-qing-wen-li-xue-yuan",
-        source:"/:type",
-        target:(params) => {
-                    if (params.type === 'channel_7721.html') {
-                        return '/cqwu/news/notify';
-                    }
-                } },
-      { title:"学术活动",
-        docs:"https://docs.rsshub.app/university.html#chong-qing-wen-li-xue-yuan",
-        source:"/:type",
-        target:(params) => {
-                    if (params.type === 'channel_7722.html') {
-                        return '/cqwu/news/academiceve';
-                    }
-                } } ] },
   "trakt.tv":{ _name:"Trakt.tv",
     ".":[ { title:"用户收藏",
         docs:"https://docs.rsshub.app/multimedia.html#trakt-tv-yong-hu-shou-cang",
