@@ -185,13 +185,6 @@
         www: [{ title: '排行榜', docs: 'https://docs.rsshub.app/shopping.html#shen-me-zhi-de-mai', source: '/top' }],
         search: [{ title: '关键词', docs: 'https://docs.rsshub.app/shopping.html#shen-me-zhi-de-mai', source: '/', target: (params, url) => `/smzdm/keyword/${new URL(url).searchParams.get('s')}` }],
     },
-    'rsshub.app': {
-        _name: 'RSSHub',
-        docs: [
-            { title: '有新路由啦', docs: 'https://docs.rsshub.app/program-update.html#rsshub', source: ['', '/*tpath'], target: '/rsshub/routes' },
-            { title: '有新赞助商啦', docs: 'https://docs.rsshub.app/program-update.html#rsshub', source: ['', '/*tpath'], target: '/rsshub/sponsors' },
-        ],
-    },
     'ximalaya.com': {
         _name: '喜马拉雅',
         '.': [
@@ -521,42 +514,6 @@
             },
         ],
         sites: [{ title: 'Sites', docs: 'https://docs.rsshub.app/blog.html#google-sites', source: ['/site/:id/*', '/site/:id'], target: '/google/sites/:id' }],
-    },
-    'javlibrary.com': {
-        _name: 'javlibrary',
-        www: [
-            { title: '新话题', docs: 'https://docs.rsshub.app/multimedia.html#javlibrary', source: '/cn', target: '/javlibrary/videos/update' },
-            { title: '新发行', docs: 'https://docs.rsshub.app/multimedia.html#javlibrary', source: '/cn', target: '/javlibrary/videos/newrelease' },
-            { title: '新加入', docs: 'https://docs.rsshub.app/multimedia.html#javlibrary', source: '/cn', target: '/javlibrary/videos/newentries' },
-            { title: '最想要', docs: 'https://docs.rsshub.app/multimedia.html#javlibrary', source: '/cn', target: '/javlibrary/videos/mostwanted' },
-            { title: '高评价', docs: 'https://docs.rsshub.app/multimedia.html#javlibrary', source: '/cn', target: '/javlibrary/videos/bestrated' },
-            { title: '最佳评论', docs: 'https://docs.rsshub.app/multimedia.html#javlibrary', source: '/cn', target: '/javlibrary/bestreviews' },
-            { title: '影星', docs: 'https://docs.rsshub.app/multimedia.html#javlibrary', source: '/cn/vl_star.php', target: (params, url) => `/javlibrary/stars/${new URL(url).searchParams.get('s')}` },
-            {
-                title: '用户文章',
-                docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
-                source: ['/cn/user.php', '/cn/userposts.php', '/cn/userwateched.php', '/cn/userowned.php', '/cn/userwanted.php'],
-                target: (params, url) => `/javlibrary/users/${new URL(url).searchParams.get('u')}/userposts`,
-            },
-            {
-                title: '用户拥有',
-                docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
-                source: ['/cn/user.php', '/cn/userposts.php', '/cn/userwateched.php', '/cn/userowned.php', '/cn/userwanted.php'],
-                target: (params, url) => `/javlibrary/users/${new URL(url).searchParams.get('u')}/userowned`,
-            },
-            {
-                title: '用户看过',
-                docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
-                source: ['/cn/user.php', '/cn/userposts.php', '/cn/userwateched.php', '/cn/userowned.php', '/cn/userwanted.php'],
-                target: (params, url) => `/javlibrary/users/${new URL(url).searchParams.get('u')}/userwatched`,
-            },
-            {
-                title: '用户想要',
-                docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
-                source: ['/cn/user.php', '/cn/userposts.php', '/cn/userwateched.php', '/cn/userowned.php', '/cn/userwanted.php'],
-                target: (params, url) => `/javlibrary/users/${new URL(url).searchParams.get('u')}/userwanted`,
-            },
-        ],
     },
     'qidian.com': {
         _name: '起点',
