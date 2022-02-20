@@ -920,6 +920,12 @@
     "/shopback/:store": [
         "nczitzk"
     ],
+    "/sicau/dky/:category?": [
+        "nczitzk"
+    ],
+    "/sicau/yan/:category?": [
+        "nczitzk"
+    ],
     "/sicau/zsjy/:category?": [
         "nczitzk"
     ],
@@ -1007,6 +1013,9 @@
     ],
     "/timednews/news/:type?": [
         "linbuxiao"
+    ],
+    "/tisi/latest": [
+        "Fatpandac"
     ],
     "/topys/:keyword?": [
         "nczitzk"
