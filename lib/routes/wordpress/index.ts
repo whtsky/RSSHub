@@ -1,0 +1,160 @@
+import { type CheerioAPI, load } from 'cheerio';
+
+import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Data, Route } from '@/types';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import parser from '@/utils/rss-parser';
+
+import { apiSlug, bakeFeedUrl, bakeFilterSearchParams, bakeFiltersWithPair, bakePageUrl, bakeUrl, fetchData, parseFilterStr } from './util';
+
+const parseGmtDate = (value: string | undefined) => {
+    if (!value) {
+        return;
+    }
+    const date = parseDate(/(?:Z|[+-]\d{2}:?\d{2})$/i.test(value) ? value : `${value}Z`);
+    return Number.isFinite(date.getTime()) ? date : undefined;
+};
+const parseRssDate = (value: string | undefined) => {
+    if (!value) {
+        return;
+    }
+    const date = parseDate(value);
+    return Number.isFinite(date.getTime()) ? date : undefined;
+};
+const rewriteImageUrls = ($: CheerioAPI, link: string, cdn: string | undefined) => {
+    $('img').each((_, el) => {
+        const image = $(el);
+        const src = image.attr('src');
+        if (src?.startsWith('/')) {
+            image.attr('src', `${cdn ?? ''}${new URL(src, link).href}`);
+        } else if (src?.startsWith('http:')) {
+            image.attr('src', `${cdn ?? ''}${src}`);
+        }
+    });
+};
+async function handler(ctx) {
+    const { url = 'https://wordpress.org/news', filter } = ctx.req.param();
+    const limit = Math.min(getRouteLimit(ctx, 50), 100);
+    if (!/^https?:\/\/[^\s#$./?].\S*$/i.test(url)) {
+        throw new Error('Invalid URL');
+    }
+    if (!config.feature.allow_user_supply_unsafe_domain && !config.wordpress.allowedDomains.includes(new URL(url).hostname.toLowerCase())) {
+        throw new ConfigNotFoundError('Set WORDPRESS_ALLOWED_DOMAINS to a comma-separated list of permitted hostnames, or set ALLOW_USER_SUPPLY_UNSAFE_DOMAIN=true.');
+    }
+    const cdn = config.wordpress.cdnUrl;
+    const rootUrl = url.replace(/\/+$/, '');
+    const filters = parseFilterStr(filter);
+    const filtersWithPair = await bakeFiltersWithPair(filters, rootUrl);
+    const apiSearchParams = bakeFilterSearchParams(filtersWithPair, 'id', true);
+    apiSearchParams.append('_embed', 'true');
+    apiSearchParams.append('per_page', String(limit));
+    const apiUrl = bakeUrl(`${apiSlug}/posts`, rootUrl, apiSearchParams);
+    const currentUrl = bakePageUrl(rootUrl, filtersWithPair);
+    try {
+        const { data: response } = await got(apiUrl);
+        const items = (Array.isArray(response) ? response : JSON.parse(response.match(/(\[.*\])$/)[1])).slice(0, limit).map((item) => {
+            const terminologies = item._embedded?.['wp:term'] ?? [];
+            const guid = item.guid?.rendered ?? item.guid;
+            const $$ = load(item.content?.rendered ?? item.content);
+            rewriteImageUrls($$, item.link || rootUrl, cdn);
+            const description = $$.html();
+            return {
+                title: item.title?.rendered ?? item.title,
+                description,
+                pubDate: parseGmtDate(item.date_gmt),
+                link: item.link,
+                category: [...new Set(terminologies.flat().map((c) => c.name))],
+                author: item._embedded?.author?.map((a) => a.name).join('/'),
+                guid,
+                id: guid,
+                content: {
+                    html: description,
+                    text: $$.text(),
+                },
+                updated: parseGmtDate(item.modified_gmt),
+            };
+        });
+        const data = await fetchData(currentUrl, rootUrl);
+        return {
+            title: 'WordPress',
+            link: currentUrl,
+            ...data,
+            item: items,
+        } as Data;
+    } catch {
+        const feed = await parser.parseURL(bakeFeedUrl(rootUrl, filtersWithPair));
+        const items = feed.items.map((item) => {
+            const guid = item.guid;
+            const $$ = load(item['content:encoded']);
+            rewriteImageUrls($$, item.link || rootUrl, cdn);
+            const description = $$.html();
+            return {
+                title: item.title!,
+                description,
+                pubDate: parseRssDate(item.pubDate),
+                link: item.link,
+                category: item.categories,
+                author: item.creator,
+                guid,
+                id: guid,
+                content: {
+                    html: description,
+                    text: $$.text(),
+                },
+            };
+        });
+        return {
+            title: feed.title!,
+            description: feed.description,
+            link: feed.link,
+            item: items,
+            image: feed.image?.url,
+            language: feed.language,
+        } satisfies Data;
+    }
+}
+export const route: Route = {
+    path: '/:url?/:filter{.+}?',
+    name: 'WordPress',
+    url: 'wordpress.org',
+    maintainers: ['nczitzk'],
+    handler,
+    example: '/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/category/Podcast',
+    parameters: { url: 'URL, <https://wordpress.org/news> by default', filter: 'Filter, see below' },
+    description: `If you subscribe to [WordPress News](https://wordpress.org/news/)，where the URL is \`https://wordpress.org/news/\`, Encode the URL using \`encodeURIComponent()\` and then use it as the parameter. Therefore, the route will be [\`/wordpress/https%3A%2F%2Fwordpress.org%2Fnews\`](https://rsshub.app/wordpress/https%3A%2F%2Fwordpress.org%2Fnews).
+
+::: tip
+If you wish to subscribe to specific categories or tags, you can fill in the "filter" parameter in the route. \`/category/Podcast\` to subscribe to the Podcast category. In this case, the route would be [\`/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/category/Podcast\`](https://rsshub.app/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/category/Podcast).
+
+You can also subscribe to multiple categories. \`/category/Podcast,Community\` to subscribe to both the Podcast and Community categories. In this case, the route would be [\`/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/category/Podcast,Community\`](https://rsshub.app/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/category/Podcast,Community).
+
+Categories and tags can be combined as well. \`/category/Releases/tag/tagging\` to subscribe to the Releases category and the tagging tag. In this case, the route would be [\`/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/category/Releases/tag/tagging\`](https://rsshub.app/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/category/Releases/tag/tagging).
+
+You can also search for keywords. \`/search/Blog\` to search for the keyword "Blog". In this case, the route would be [\`/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/search/Blog\`](https://rsshub.app/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/search/Blog).
+:::`,
+    categories: ['blog'],
+    features: {
+        requireConfig: [
+            {
+                name: 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN',
+                description: 'Enable requests to any WordPress domain. Alternatively, use WORDPRESS_ALLOWED_DOMAINS to permit specific domains.',
+                optional: true,
+            },
+            {
+                name: 'WORDPRESS_ALLOWED_DOMAINS',
+                description: 'Comma-separated hostnames allowed without ALLOW_USER_SUPPLY_UNSAFE_DOMAIN, for example wordpress.org,blog.example.com.',
+                optional: true,
+            },
+        ],
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportRadar: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: [],
+};

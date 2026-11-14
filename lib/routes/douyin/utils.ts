@@ -1,0 +1,63 @@
+import type { Page } from 'patchright';
+
+import { config } from '@/config';
+
+import { renderCover } from './templates/cover';
+import { renderDesc } from './templates/desc';
+import { renderEmbed } from './templates/embed';
+import { renderIframe } from './templates/iframe';
+
+const templates = {
+    desc: renderDesc,
+    cover: renderCover,
+    embed: renderEmbed,
+    iframe: renderIframe,
+};
+
+const resolveUrl = (url, tls = true, forceResolve = false) => {
+    if (!url) {
+        return '';
+    }
+    if (url.startsWith('//')) {
+        return (tls ? 'https:' : 'http:') + url;
+    }
+    if (forceResolve && !/^https?:\/\//.test(url)) {
+        return (tls ? 'https://' : 'http://') + url;
+    }
+    return url;
+};
+
+const proxyVideo = (url, proxy) => {
+    if (!(url && proxy)) {
+        return url + '';
+    }
+    if (proxy.includes('?')) {
+        if (!proxy.endsWith('=')) {
+            proxy += '=';
+        }
+        return proxy + encodeURIComponent(url);
+    }
+    if (!proxy.endsWith('/')) {
+        proxy += '/';
+    }
+    return proxy + url;
+};
+
+const getOriginAvatar = (url) =>
+    resolveUrl(url)
+        .replace(/^(.*\.douyinpic\.com\/).*(\/aweme-avatar\/)([^?]*)(\?.*)?$/, '$1origin$2$3')
+        .replaceAll(/~\w+_\d+x\d+/g, '');
+
+export { getOriginAvatar, proxyVideo, resolveUrl, templates };
+
+export const getApiResponse = async (page: Page, pageUrl: string, apiPath: string) => {
+    const [response] = await Promise.all([page.waitForResponse((response) => response.url().includes(apiPath), { timeout: config.requestTimeout }), page.goto(pageUrl, { waitUntil: 'domcontentloaded' })]);
+    if (!response.ok()) {
+        throw new Error(`Douyin API returned HTTP ${response.status()}. Anonymous access may be blocked by the source site.`);
+    }
+    try {
+        return await response.json();
+    } catch {
+        throw new Error(`Douyin API returned invalid JSON (HTTP ${response.status()}). Anonymous access may be blocked by the source site.`);
+    }
+};

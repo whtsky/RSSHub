@@ -1,0 +1,221 @@
+/* eslint-disable no-await-in-loop */
+import type { Context } from 'hono';
+import { Api } from 'teleproto';
+import { HTMLParser } from 'teleproto/extensions/html.js';
+import { returnBigInt } from 'teleproto/Helpers.js';
+import { getDisplayName } from 'teleproto/Utils.js';
+
+import type { DataItem } from '@/types';
+import cache from '@/utils/cache';
+import { parseDate } from '@/utils/parse-date';
+
+import { getClient, getDocument, getFilename, unwrapMedia } from './client';
+
+export function getGeoLink(geo: Api.GeoPoint) {
+    return `<a href="https://www.google.com/maps/search/?api=1&query=${geo.lat}%2C${geo.long}" target="_blank">Geo LatLon: ${geo.lat}, ${geo.long}</a>`;
+}
+
+async function getPollResults(client, message, m: Api.MessageMediaPoll) {
+    const resultsUpdateResponse = await client.invoke(new Api.messages.GetPollResults({ peer: message.peerId, msgId: message.id }));
+    let results: Api.PollResults;
+    if (resultsUpdateResponse?.updates[0] instanceof Api.UpdateMessagePoll) {
+        results = resultsUpdateResponse.updates[0].results;
+    }
+    const txt = `<h4>${m.poll.quiz ? 'Quiz' : 'Poll'}: ${m.poll.question.text}</h4>
+        <div><ul>${m.poll.answers
+            .filter((a) => a instanceof Api.PollAnswer)
+            .map((a) => {
+                let answerTxt = a.text.text;
+                const result = results.results?.find((r) => r.option.buffer === a.option.buffer);
+                if (result?.voters !== undefined && results.totalVoters) {
+                    answerTxt = `<strong>${Math.round((result.voters / results.totalVoters) * 100)}%</strong>: ${answerTxt}`;
+                }
+                return `<li>${answerTxt}</li>`;
+            })
+            .join('')}</ul></div>
+    `;
+    return txt;
+}
+
+function withSearchParams(src: string, params: Record<string, string>) {
+    const url = new URL(src);
+    for (const [key, value] of Object.entries(params)) {
+        url.searchParams.set(key, value);
+    }
+    return url.href;
+}
+
+function getMessageMediaUrl(requestUrl: string, username: string, messageId: number, forwardedPrefix?: string) {
+    const request = new URL(requestUrl);
+    const channelPathIndex = request.pathname.lastIndexOf('/telegram/channel/');
+    const prefix = forwardedPrefix ?? (channelPathIndex === -1 ? '' : request.pathname.slice(0, channelPathIndex));
+    const url = new URL(request.origin);
+    url.pathname = `${prefix.replace(/\/+$/, '')}/telegram/media/${username}/${messageId}`;
+    for (const key of ['key', 'code']) {
+        const value = request.searchParams.get(key);
+        if (value) {
+            url.searchParams.set(key, value);
+        }
+    }
+    return url.href;
+}
+
+export function getMediaLink(src: string, m: Api.TypeMessageMedia) {
+    const doc = getDocument(m);
+    const mime = doc ? doc.mimeType : '';
+
+    if (m instanceof Api.MessageMediaPhoto || mime.startsWith('image/')) {
+        return `<img src="${src}" alt=""/>`;
+    }
+    if (doc && mime.startsWith('video/')) {
+        const vid = doc.attributes.find((t) => t instanceof Api.DocumentAttributeVideo) ?? { w: 1080, h: 720 };
+        return `<video controls preload="metadata" poster="${withSearchParams(src, { thumb: '' })}" width="${vid.w / 2}" height="${vid.h / 2}"><source src="${src}" type="${mime}"></video>`;
+    }
+    if (doc && mime.startsWith('audio/')) {
+        return `<div>${getAudioTitle(m)}</div><div><audio src="${src}"></audio></div>`;
+    }
+
+    if (doc && mime.startsWith('application/')) {
+        let linkText = `${getFilename(m)} (${humanFileSize(doc.size.valueOf())})`;
+        if (mime.endsWith('x-tgsticker')) {
+            linkText = ''; // remove filename, it's only an animated sticker
+        }
+        if ((doc.thumbs?.length ?? 0) > 0) {
+            linkText = `<div><img src="${withSearchParams(src, { thumb: '' })}" alt=""/></div><div>${linkText}</div>`;
+        }
+        return `<a href="${src}" target="_blank">${linkText}</a>`;
+    }
+    if ((m instanceof Api.MessageMediaGeo || m instanceof Api.MessageMediaGeoLive) && m.geo instanceof Api.GeoPoint) {
+        return getGeoLink(m.geo);
+    }
+    if (m instanceof Api.MessageMediaWebPage) {
+        return ''; // a link without a document attach, usually is in the message text, so we can skip here
+    }
+    if (m instanceof Api.MessageMediaContact) {
+        return `Contact: <a href="tel:${m.phoneNumber}" target="_blank">${m.firstName} ${m.lastName} ${m.phoneNumber}</a>`;
+        // TODO: download vCard as media ?
+    }
+    if (m instanceof Api.MessageMediaInvoice) {
+        let description = m.description;
+        if (m.photo?.url) {
+            description = `<img src="${m.photo?.url}" /><br />${description}`;
+        }
+        return `<h4>${m.test ? 'TEST ' : ''}Invoice: ${m.title}</h4><div>${description}</div>`;
+    }
+
+    return m.className;
+}
+
+function humanFileSize(size: number) {
+    const i = size === 0 ? 0 : Math.floor(Math.log(size) / Math.log(1024));
+    return (size / Math.pow(1024, i)).toFixed(2) + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i];
+}
+
+function getAudioTitle(x: Api.TypeMessageMedia) {
+    if (x instanceof Api.MessageMediaDocument && x.document instanceof Api.Document) {
+        const attr = x.document.attributes.find((x) => x instanceof Api.DocumentAttributeAudio);
+        if (attr) {
+            return `${attr.performer} - ${attr.title} (${humanDuration(attr.duration)})`;
+        }
+    }
+    return getFilename(x);
+}
+
+function humanDuration(seconds: number) {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = seconds % 60;
+
+    // Format time components with leading zeros if necessary
+    const paddedMinutes = String(minutes).padStart(2, '0');
+    const paddedSeconds = String(remainingSeconds).padStart(2, '0');
+
+    // Construct the time string conditionally
+    if (hours > 0) {
+        return `${hours}:${paddedMinutes}:${paddedSeconds}`; // Show hours, minutes, and seconds
+    }
+    if (minutes > 0) {
+        return `${minutes}:${paddedSeconds}`; // Show minutes and seconds
+    }
+    return `0:${paddedSeconds}`; // Show only seconds
+}
+
+export default async function handler(ctx: Context) {
+    const client = await getClient();
+    const username = ctx.req.param('username');
+
+    let peerCache = await cache.get(`telegram:inputEntity:${username}`);
+    if (!peerCache) {
+        const p = await client.getInputEntity(username!);
+        peerCache = JSON.stringify(p.toJSON());
+        // The channel ID and access hash do not change, and contacts.ResolveUsername is heavily rate limited
+        await cache.set(`telegram:inputEntity:${username}`, peerCache, 30 * 24 * 60 * 60);
+    }
+    const peerData = JSON.parse(peerCache, (k, v) => (k === 'channelId' || k === 'accessHash' ? returnBigInt(v) : v));
+    const peer = new Api.InputPeerChannel(peerData);
+
+    const entity = await client.getEntity(peer);
+
+    let attachments: string[] = [];
+    const messages = await client.getMessages(peer, { limit: 50 });
+
+    const item: DataItem[] = [];
+    for (const [index, message] of messages.entries()) {
+        const parts: string[] = [];
+        const media = await unwrapMedia(message.media, message.peerId);
+        if (message.media instanceof Api.MessageMediaStory && media) {
+            // if successfully loaded the story
+            const storyFrom = await client.getEntity(message.media.peer);
+            parts.push(`<p>Story From: ${getDisplayName(storyFrom)}</p>`);
+        }
+        if (media) {
+            if (media instanceof Api.MessageMediaPoll) {
+                parts.push(await getPollResults(client, message, media));
+            } else {
+                const src = getMessageMediaUrl(ctx.req.url, username!, message.id, ctx.req.header('x-forwarded-prefix'));
+                parts.push(getMediaLink(src, media));
+            }
+        }
+        if (message.replyMarkup instanceof Api.ReplyInlineMarkup) {
+            for (const buttonRow of message.replyMarkup.rows) {
+                for (const button of buttonRow.buttons) {
+                    if (button.type instanceof Api.InlineButtonTypeUrl) {
+                        parts.push(`<div><a href="${button.type.url}" target="_blank">${button.text}</a></div>`);
+                    }
+                }
+            }
+        }
+        attachments.unshift(...parts);
+        if (message.groupedId && messages[index + 1]?.groupedId?.eq(message.groupedId)) {
+            continue;
+        }
+        if (message.fwdFrom) {
+            const fwdFrom = message.forward?.chat ?? message.forward?.sender;
+            attachments.unshift(`<p>Forwarded From: ${fwdFrom ? getDisplayName(fwdFrom) : message.fwdFrom.fromName}</p>`);
+        }
+        let description = attachments.join('<br/>\n');
+        attachments = []; // emitting these, buffer other ones
+
+        if (message.message) {
+            description += `<p>${HTMLParser.unparse(message.message, message.entities).replaceAll('\n', '<br/>')}</p>`;
+        }
+
+        const pubDate = message.date === undefined ? undefined : parseDate(message.date * 1000);
+        const title = message.text.split('\n', 1)[0] || pubDate?.toUTCString() || '';
+        item.push({
+            title,
+            description,
+            pubDate,
+            link: `https://t.me/s/${username}/${message.id}`,
+            author: getDisplayName(message.sender ?? entity),
+        });
+    }
+
+    return {
+        title: getDisplayName(entity),
+        link: `https://t.me/${username}`,
+        item,
+        allowEmpty: ctx.req.param('id') === 'allow_empty',
+        description: `@${username} on Telegram`,
+    };
+}

@@ -1,0 +1,49 @@
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
+
+import { parseDateText } from './utils';
+
+export const route: Route = {
+    path: '/versions',
+    categories: ['program-update'],
+    example: '/quicker/versions',
+    name: '版本更新',
+    maintainers: ['Cesaryuan', 'nczitzk'],
+    handler,
+    url: 'getquicker.net/Help/Versions',
+};
+
+async function handler() {
+    const rootUrl = 'https://getquicker.net';
+    const currentUrl = `${rootUrl}/Help/Versions`;
+
+    const response = await got({
+        method: 'get',
+        url: currentUrl,
+    });
+
+    const $ = load(response.data);
+
+    const items = $('.version')
+        .toArray()
+        .map((item) => {
+            const $item = $(item);
+
+            const a = $item.find('h2 a');
+
+            return {
+                title: a.text().trim(),
+                link: `${rootUrl}${a.attr('href')}`,
+                description: $item.find('.article-content').html(),
+                pubDate: parseDateText($item.find('.text-secondary').first().text()),
+            };
+        });
+
+    return {
+        title: $('title').text(),
+        link: currentUrl,
+        item: items,
+    };
+}

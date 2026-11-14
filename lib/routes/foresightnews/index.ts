@@ -1,0 +1,45 @@
+import type { Language, Route } from '@/types';
+
+import { apiRootUrl, icon, image, processItems, rootUrl } from './util';
+
+export const route: Route = {
+    path: '/',
+    categories: ['new-media'],
+    example: '/foresightnews',
+    radar: [
+        {
+            source: ['foresightnews.pro/'],
+            target: '',
+        },
+    ],
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '精选资讯',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'foresightnews.pro/',
+};
+
+async function handler(ctx) {
+    const apiUrl = new URL('v2/feed', apiRootUrl).href;
+
+    const { items } = await processItems(apiUrl, ctx);
+
+    return {
+        item: items,
+        title: 'Foresight News - 精选资讯',
+        link: rootUrl,
+        description: 'FN精选 - Foresight News',
+        language: 'zh-CN' as const satisfies Language,
+        image,
+        icon,
+        logo: icon,
+        author: 'Foresight News',
+    };
+}

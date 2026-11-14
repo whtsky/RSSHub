@@ -1,0 +1,57 @@
+import { load } from 'cheerio';
+
+import type { Data, Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+
+import { getData, getList } from './utils';
+
+export const route: Route = {
+    path: '/featured',
+    categories: ['new-media'],
+    example: '/grist/featured',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: [
+        {
+            source: ['grist.org/'],
+        },
+    ],
+    name: 'Featured',
+    maintainers: ['Rjnishant530'],
+    handler,
+    url: 'grist.org/',
+};
+
+async function handler(): Promise<Data> {
+    const baseUrl = 'https://grist.org/';
+    const { data: response } = await got(baseUrl);
+    const $ = load(response);
+
+    const listItems = $('li.hp-featured__tease')
+        .toArray()
+        .map((item) => {
+            const $item = $(item);
+            const slug = new URL($item.find('.small-tease__link').attr('href')!, baseUrl).pathname.split('/').findLast(Boolean)!;
+            return `https://grist.org/wp-json/wp/v2/posts?slug=${encodeURIComponent(slug)}&_embed`;
+        });
+    const itemData = await Promise.all(listItems.map((url) => cache.tryGet(url, async () => (await getData(url))[0])));
+    const items = await getList(itemData);
+
+    return {
+        title: 'Grist Featured Articles',
+        link: baseUrl,
+        item: items,
+        description: 'Featured Articles on Grist.org',
+        logo: 'https://grist.org/wp-content/uploads/2021/03/cropped-Grist-Favicon.png?w=192',
+        icon: 'https://grist.org/wp-content/uploads/2021/03/cropped-Grist-Favicon.png?w=32',
+        language: 'en-us',
+    };
+}

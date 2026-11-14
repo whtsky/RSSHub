@@ -1,0 +1,68 @@
+import { load } from 'cheerio';
+
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import got from '@/utils/got';
+import { isValidHost } from '@/utils/valid-host';
+
+const host = 'https://www.douban.com/explore/column/';
+export const route: Route = {
+    path: '/explore/column/:id',
+    categories: ['social-media'],
+    example: '/douban/explore/column/2',
+    parameters: { id: '分栏目id' },
+    name: '浏览发现分栏目',
+    maintainers: ['LogicJake'],
+    handler,
+};
+
+async function handler(ctx) {
+    const id = ctx.req.param('id');
+    if (!isValidHost(id)) {
+        throw new InvalidParameterError('Invalid id');
+    }
+
+    const link = new URL(id, host).href;
+    const response = await got.get(link);
+    const $ = load(response.data);
+    const title = $('div.h1').text();
+
+    const list = $('div.item')
+        .slice(0, 10)
+        .toArray()
+        .map((item) => {
+            const info = {
+                title: $(item).find('div.title a').text(),
+                link: $(item).find('div.title a').attr('href'),
+                author: $(item).find('div.usr-pic a').text(),
+            };
+            return info;
+        })
+        .filter((info) => info.author !== '[已注销]');
+
+    const out = await Promise.all(
+        list.map(async (info) => {
+            const title = info.title;
+            const author = info.author;
+            const itemUrl = info.link;
+
+            const response = await got.get(itemUrl);
+            const $ = load(response.data);
+            const description = $('#link-report').html();
+
+            const single = {
+                title,
+                link: itemUrl,
+                description,
+                author,
+            };
+            return single;
+        })
+    );
+
+    return {
+        title: `${title}-豆瓣发现`,
+        link,
+        item: out,
+    };
+}

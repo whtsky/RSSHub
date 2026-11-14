@@ -1,0 +1,97 @@
+import { load } from 'cheerio';
+
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+
+import { apiHost, baseUrl, getTagsData, parseEventDetail, parseItem } from './utils';
+
+export const route: Route = {
+    path: '/hub/:tagId?/:sort?/:range?',
+    categories: ['programming'],
+    example: '/baai/hub',
+    parameters: {
+        tagId: '社群 ID，可在 [社群页](https://hub.baai.ac.cn/taglist) 或 URL 中找到',
+        sort: '排序，见下表，默认为 `new`',
+        range: '时间跨度，仅在排序 `readCnt` 时有效',
+    },
+    description: `排序
+
+| 最新 | 最热    |
+| ---- | ------- |
+| new  | readCnt |
+
+时间跨度
+
+| 3 天 | 本周 | 本月 |
+| ---- | ---- | ---- |
+| 3    | 7    | 30   |`,
+    radar: [
+        {
+            source: ['hub.baai.ac.cn/'],
+            target: '/hub',
+        },
+    ],
+    name: '智源社区',
+    maintainers: ['TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
+    const { tagId = '', sort = 'new', range } = ctx.req.param();
+
+    let title, description, brief, iconUrl;
+    if (tagId) {
+        const tagsData: Array<{ id: number; title: string; description: string; brief: string; iconUrl: string }> = await getTagsData();
+
+        const tag = tagsData.find((tag) => String(tag.id) === tagId);
+        if (tag) {
+            title = tag.title;
+            description = tag.description;
+            brief = tag.brief;
+            iconUrl = tag.iconUrl;
+        } else {
+            throw new InvalidParameterError('Tag not found');
+        }
+    }
+
+    const response = await ofetch(`${apiHost}/api/v1/story/list`, {
+        method: 'POST',
+        query: {
+            page: 1,
+            sort,
+            tag_id: tagId,
+            time_range: range,
+        },
+    });
+
+    if (!Array.isArray(response.data)) {
+        throw new TypeError(`BAAI Hub did not return an article list${tagId ? ` for tag ${tagId}` : ''}: ${response.message || 'check the source website and route parameters'}`);
+    }
+
+    const list = response.data.map((item) => parseItem(item));
+
+    const items = await Promise.all(
+        list.map((item) =>
+            cache.tryGet(item.link, async () => {
+                if (item.eventId) {
+                    item.description = await parseEventDetail(item);
+                } else {
+                    const response = await ofetch(item.link);
+                    const $ = load(response);
+                    item.description = item.is_event ? $('div.box2').html() : $('.post-content').html();
+                }
+                return item;
+            })
+        )
+    );
+
+    return {
+        title: `${title ? `${title} - ` : ''}${description ? `${description} - ` : ''}智源社区`,
+        description: brief,
+        link: `${baseUrl}/?${tagId ? `tag_id=${tagId}&` : ''}sort=${sort}${range ? `&time_range=${range}` : ''}`,
+        image: iconUrl,
+        item: items,
+    };
+}

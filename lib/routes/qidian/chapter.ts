@@ -1,0 +1,63 @@
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import got from '@/utils/got';
+import { PRESETS } from '@/utils/header-generator';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+
+export const route: Route = {
+    path: '/chapter/:id',
+    categories: ['reading'],
+    view: ViewType.Notifications,
+    example: '/qidian/chapter/1010400217',
+    parameters: { id: '小说 id, 可在对应小说页 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: [
+        {
+            source: ['book.qidian.com/info/:id'],
+        },
+    ],
+    name: '作品章节',
+    maintainers: ['fuzy112', 'pseudoyu'],
+    handler,
+};
+
+async function handler(ctx) {
+    const id = ctx.req.param('id');
+
+    const response = await got(`https://m.qidian.com/book/${id}.html`, { headerGeneratorOptions: PRESETS.MODERN_IOS });
+    const $ = load(response.data);
+
+    const name = $('meta[property="og:title"]').attr('content');
+    const { pageContext: bookContext } = JSON.parse($('#vite-plugin-ssr_pageContext').text());
+    const cover = $('.detail__header-cover__img').attr('src');
+    const coverUrl = cover ? new URL(cover, 'https://m.qidian.com').href : undefined;
+
+    const { data: catalog } = await got(`https://m.qidian.com/book/${id}/catalog/`, { headerGeneratorOptions: PRESETS.MODERN_IOS });
+    const $c = load(catalog);
+    const { pageContext } = JSON.parse($c('#vite-plugin-ssr_pageContext').text());
+
+    const chapterItem = pageContext.pageProps.pageData.vs
+        .flatMap((v) => v.cs)
+        .map((c) => ({
+            title: c.cN,
+            pubDate: parseDateInTimezone(c.uT, 8),
+            link: `https://vipreader.qidian.com/chapter/${id}/${c.id}`,
+        }));
+
+    return {
+        title: `起点 ${name}`,
+        link: `https://book.qidian.com/info/${id}`,
+        description: bookContext.pageProps.pageData.bookInfo.desc,
+        image: coverUrl,
+        item: chapterItem,
+    };
+}

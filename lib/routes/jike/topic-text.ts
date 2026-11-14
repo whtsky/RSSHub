@@ -1,0 +1,57 @@
+import dayjs from 'dayjs';
+import { escapeText } from 'entities';
+
+import type { Route } from '@/types';
+
+import { constructTopicEntry, parseCreatedAt } from './utils';
+
+export const route: Route = {
+    path: '/topic/text/:id',
+    categories: ['social-media'],
+    example: '/jike/topic/text/553870e8e4b0cafb0a1bef68',
+    parameters: { id: '圈子 id, 可在即刻 web 端圈子页或 APP 分享出来的圈子页 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: [
+        {
+            source: ['web.okjike.com/topic/:id'],
+            target: '/topic/text/:id',
+        },
+        {
+            source: ['m.okjike.com/topics/:id'],
+            target: '/topic/text/:id',
+        },
+    ],
+    name: '圈子 - 纯文字',
+    maintainers: ['HenryQW'],
+    handler,
+};
+
+async function handler(ctx) {
+    const id = ctx.req.param('id');
+    const topicUrl = `https://m.okjike.com/topics/${id}`;
+
+    const data = await constructTopicEntry(ctx, topicUrl);
+
+    if (!data) {
+        return;
+    }
+
+    const result = data.result;
+    result.item = data.posts.map((item) => {
+        const pubDate = parseCreatedAt(item.createdAt);
+        return {
+            title: pubDate ? `${data.topic.content} ${dayjs(pubDate).format('MM月DD日')}` : data.topic.content,
+            description: escapeText(item.content).replaceAll('\n', '<br>'),
+            pubDate,
+            link: `https://m.okjike.com/originalPosts/${item.id}`,
+        };
+    });
+    return result;
+}

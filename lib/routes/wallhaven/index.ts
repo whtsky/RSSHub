@@ -1,0 +1,107 @@
+import { load } from 'cheerio';
+import pMap from 'p-map';
+
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+
+const rootUrl = 'https://wallhaven.cc';
+
+export const route: Route = {
+    path: ['/search/:filter?/:needDetails?', '/:filter?/:needDetails?'],
+    categories: ['picture'],
+    example: '/wallhaven/search/categories=110&purity=110&sorting=date_added&order=desc',
+    parameters: { filter: 'Filter, empty by default', needDetails: 'Need Details, `true`/`yes` as yes, no by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: [
+        {
+            source: ['wallhaven.cc/'],
+        },
+    ],
+    name: 'Search',
+    maintainers: ['nczitzk', 'Fatpandac'],
+    handler,
+    url: 'wallhaven.cc/',
+    description: `::: tip
+Subscribe pages starting with \`https://wallhaven.cc/search\`, fill the text after \`?\` as \`filter\` in the route. The following is an example:
+
+The text after \`?\` is \`q=id%3A711&sorting=random&ref=fp&seed=8g0dgd\` for [Wallpaper Search: #landscape - wallhaven.cc](https://wallhaven.cc/search?q=id%3A711\\&sorting=random\\&ref=fp\\&seed=8g0dgd), so the route is [/wallhaven/q=id%3A711\\&sorting=random\\&ref=fp\\&seed=8g0dgd](https://rsshub.app/wallhaven/q=id%3A711\\&sorting=random\\&ref=fp\\&seed=8g0dgd)
+:::`,
+};
+
+function parseLimit(value: string | undefined, defaultLimit: number) {
+    const limit = Number(value);
+    return Number.isFinite(limit) && limit >= 1 ? Math.floor(limit) : defaultLimit;
+}
+
+function parseSourceTime(value: string | undefined) {
+    if (!value?.trim()) {
+        return;
+    }
+    const date = parseDate(value);
+    return Number.isFinite(date.getTime()) ? date : undefined;
+}
+
+async function handler(ctx) {
+    const filter = ctx.req.param('filter') ?? 'latest';
+    const needDetails = /^(?:true|yes|t|y)$/i.test(ctx.req.param('needDetails') ?? 'false');
+    const url = `${rootUrl}/${filter.indexOf('=') > 0 ? `search?${filter.replaceAll(/page=\d+/g, 'page=1')}` : filter}`;
+
+    const response = await got.get(url);
+    const $ = load(response.data);
+
+    let items = $('li > figure.thumb')
+        .slice(0, parseLimit(ctx.req.query('limit'), 24))
+        .toArray()
+        .map((item): DataItem => {
+            const image = $(item).find('img.lazyload').first();
+            const imageUrl = image.attr('data-src') || image.attr('src');
+            if (imageUrl) {
+                image.attr('src', imageUrl);
+            }
+            return {
+                title: imageUrl?.split('/').pop() || '',
+                description: image.toString(),
+                link: $(item).find('a.preview').attr('href'),
+            };
+        });
+    if (needDetails) {
+        items = await pMap(
+            items,
+            async (item) => {
+                const details = await cache.tryGet<Pick<DataItem, 'title' | 'author' | 'pubDate' | 'category' | 'description'>>(`wallhaven:detail:${item.link}`, async () => {
+                    const detailResponse = await got({
+                        method: 'get',
+                        url: item.link,
+                    });
+                    const content = load(detailResponse.data);
+                    return {
+                        title: content('meta[name="title"]').attr('content')!,
+                        author: content('.username').text(),
+                        pubDate: parseSourceTime(content('time').attr('datetime')),
+                        category: content('.tagname')
+                            .toArray()
+                            .map((tag) => content(tag).text()),
+                        description: content('div.scrollbox').html() ?? '',
+                    };
+                });
+                return { ...item, ...details };
+            },
+            { concurrency: 3 }
+        );
+    }
+
+    return {
+        title: $('title').text(),
+        link: url,
+        item: items,
+    };
+}

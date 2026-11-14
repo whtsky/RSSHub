@@ -1,0 +1,101 @@
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import { parseDate } from '@/utils/parse-date';
+
+import { renderDescription } from './templates/description';
+import { defaultDomain, getRootUrl, processApiItems } from './utils';
+
+export const route: Route = {
+    path: '/album/:id',
+    categories: ['anime'],
+    example: '/18comic/album/292282',
+    parameters: { id: '专辑 id，可在专辑页 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+        nsfw: true,
+    },
+    radar: [
+        {
+            source: ['jmcomic.group/'],
+        },
+    ],
+    name: '专辑',
+    maintainers: ['nczitzk', 'pseudoyu'],
+    handler,
+    url: 'jmcomic.group/',
+    description: `::: tip
+专辑 id 不包括 URL 中标题的部分。
+:::`,
+};
+
+async function handler(ctx) {
+    const id = ctx.req.param('id');
+    const { domain = defaultDomain } = ctx.req.query();
+    const rootUrl = getRootUrl(domain);
+    const currentUrl = `${rootUrl}/album/${id}`;
+
+    const apiResult = await processApiItems(`/album?id=${id}`);
+
+    const category = apiResult.tags;
+    const author = apiResult.author.join(', ');
+    const description = apiResult.description;
+    const addTime = apiResult.addtime;
+    let results: any[] = [];
+    if (apiResult.series.length === 0) {
+        results.push({
+            title: apiResult.name,
+            link: `${rootUrl}/photo/${id}`,
+            guid: `${rootUrl}/photo/${id}`,
+            updated: parseDate(addTime, 'X'),
+            pubDate: parseDate(addTime, 'X'),
+            category,
+            author,
+            description: renderDescription({
+                introduction: description,
+                // 不取图片，因为专辑的图片会被分割排序，所以只取封面图
+                images: [`https://cdn-msp3.${domain}/media/albums/${id}_3x4.jpg`],
+                cover: `https://cdn-msp3.${domain}/media/albums/${id}_3x4.jpg`,
+                category,
+            }),
+        });
+    } else {
+        results = await Promise.all(
+            apiResult.series.map((item, index) =>
+                cache.tryGet(`18comic:album:${item.id}`, async () => {
+                    const chapterResult = await processApiItems(`/chapter?id=${item.id}`);
+                    const result: DataItem = { title: '' };
+                    const chapterNum = index + 1;
+                    result.title = `第${chapterNum}話 ${item.name === '' ? chapterNum : item.name}`;
+                    result.link = `${rootUrl}/photo/${item.id}`;
+                    result.guid = `${rootUrl}/photo/${item.id}`;
+                    result.updated = parseDate(chapterResult.addtime, 'X');
+                    result.pubDate = parseDate(addTime, 'X');
+                    result.category = category;
+                    result.author = author;
+                    result.description = renderDescription({
+                        introduction: description,
+                        // 不取图片，因为专辑的图片会被分割排序，所以只取封面图
+                        images: [`https://cdn-msp3.${domain}/media/albums/${item.id}_3x4.jpg`],
+                        cover: `https://cdn-msp3.${domain}/media/albums/${item.id}_3x4.jpg`,
+                        category,
+                    });
+                    return result;
+                })
+            )
+        );
+        results = results.toReversed();
+    }
+
+    return {
+        title: `${apiResult.name} - 禁漫天堂`,
+        link: currentUrl.replace(/\?$/, ''),
+        item: results,
+        allowEmpty: true,
+        description,
+    };
+}

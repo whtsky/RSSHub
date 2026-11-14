@@ -1,0 +1,92 @@
+import { load } from 'cheerio';
+
+import type { Language, Route } from '@/types';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
+
+export const route: Route = {
+    path: '/desktop',
+    categories: ['program-update'],
+    example: '/tradingview/desktop',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: [
+        {
+            source: ['tradingview.com/support/solutions/43000673888-tradingview-desktop-releases-and-release-notes/'],
+        },
+    ],
+    name: 'Desktop releases and release notes',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'tradingview.com/support/solutions/43000673888-tradingview-desktop-releases-and-release-notes/',
+};
+
+async function handler(ctx) {
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 50;
+
+    const rootUrl = 'https://www.tradingview.com';
+    const currentUrl = new URL('/support/solutions/43000673888-tradingview-desktop-releases-and-release-notes/', rootUrl).href;
+
+    const { data: response } = await got(currentUrl);
+
+    const $ = load(response);
+
+    $('h3').each((_, el) => {
+        const $el = $(el);
+
+        if ($el.text().trim() === '') {
+            $el.remove();
+        }
+    });
+
+    const items = $('h3')
+        .toArray()
+        .slice(0, limit)
+        .map((item) => {
+            const $item = $(item);
+
+            const title = $item.text();
+            const content = $item.nextUntil('h3');
+            const description = $.html(content);
+
+            return {
+                title,
+                link: currentUrl,
+                description,
+                category: content
+                    .filter('h5')
+                    .add(content.find('h5'))
+                    .toArray()
+                    .map((c) => $(c).text()),
+                guid: `tradingview-desktop#${title.split(/versions?\s/).pop()}`,
+                pubDate: timezone(parseDate(title.split(/\./, 1)[0], 'MMMM D, YYYY'), 8),
+            };
+        });
+
+    const title = $('title').text();
+    const titleSplits = title.split(/—/);
+    const icon = new URL($('link[rel="icon"]').prop('href')!, rootUrl).href;
+
+    const language = $('html').prop('lang') as Language;
+
+    return {
+        item: items,
+        title,
+        link: currentUrl,
+        description: titleSplits[0],
+        language,
+        icon,
+        logo: icon,
+        subtitle: titleSplits[0],
+        author: titleSplits.pop(),
+    };
+}

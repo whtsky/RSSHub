@@ -1,0 +1,40 @@
+import type { Route } from '@/types';
+import { getRouteLimit } from '@/utils/route-limit';
+
+import { processItems, rootUrl } from './utils';
+
+export const route: Route = {
+    path: '/latest',
+    categories: ['traditional-media'],
+    example: '/yicai/latest',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: [
+        {
+            source: ['yicai.com/'],
+        },
+    ],
+    name: '最新',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'yicai.com/',
+};
+
+async function handler(ctx) {
+    const apiUrl = `${rootUrl}/api/ajax/getlatest?page=1&pagesize=${getRouteLimit(ctx, 30)}`;
+
+    const items = await processItems(apiUrl);
+
+    return {
+        title: '第一财经 - 最新',
+        link: rootUrl,
+        item: items,
+    };
+}

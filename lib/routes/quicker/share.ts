@@ -1,0 +1,100 @@
+import { load } from 'cheerio';
+import pMap from 'p-map';
+
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+
+import { parseDateText } from './utils';
+
+export const route: Route = {
+    path: '/share/:category?',
+    categories: ['programming'],
+    example: '/quicker/share/Recent',
+    parameters: { category: '分类，见下表，默认为动作库最新更新' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: [
+        {
+            source: ['getquicker.net/Share/:category', 'getquicker.net/'],
+        },
+    ],
+    name: '动作分享',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `| 动作库最新更新 | 动作库最多赞 | 动作库新动作 | 动作库最近赞 |
+| -------------- | ------------ | ------------ | ------------ |
+| Recent         | Recommended  | NewActions   | RecentLiked  |
+
+| 子程序      | 扩展热键  | 文本指令     |
+| ----------- | --------- | ------------ |
+| SubPrograms | PowerKeys | TextCommands |`,
+};
+
+async function handler(ctx) {
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 25;
+    const category = ctx.req.param('category') ?? 'Recent';
+
+    const rootUrl = 'https://getquicker.net';
+    const currentUrl = `${rootUrl}/Share/${category}`;
+
+    const response = await got({
+        method: 'get',
+        url: currentUrl,
+    });
+
+    const $ = load(response.data);
+
+    let items = $('table tbody tr')
+        .toArray()
+        .flatMap((item): Array<DataItem & { link: string }> => {
+            const $item = $(item).find('td a').first();
+            const href = $item.attr('href');
+            if (!href) {
+                return [];
+            }
+            return [{ title: $item.text(), link: new URL(href, rootUrl).href, pubDate: parseDateText($(item).find('[title="最后更新"]').text()) }];
+        })
+        .slice(0, limit);
+
+    items = await pMap(
+        items,
+        (item) =>
+            cache.tryGet(item.link!, async () => {
+                const detailResponse = await got({
+                    method: 'get',
+                    url: item.link,
+                });
+
+                const content = load(detailResponse.data);
+
+                content('section').last().remove();
+                content('#app').children().slice(0, 2).remove();
+
+                const dateElement = content('.text-secondary a[title], .text-secondary span[title]')
+                    .filter((_, element) => /\d{4}[-/]/.test(content(element).attr('title') ?? ''))
+                    .first();
+                const pubDate = dateElement.attr('title') || content('.text-secondary a').not('.text-secondary').first().text() || content('div.note-text').find('span').eq(3).text();
+
+                item.author = content('.user-link').first().text();
+                item.description = content('div[data-info="动作信息"]').html() ?? content('#app').html() ?? content('.row').eq(1).html();
+                item.pubDate = parseDateText(pubDate) ?? item.pubDate;
+
+                return item;
+            }),
+        { concurrency: 3 }
+    );
+
+    return {
+        title: $('title').text(),
+        link: currentUrl,
+        item: items,
+    };
+}

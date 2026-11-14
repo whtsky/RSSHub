@@ -1,0 +1,118 @@
+import { load } from 'cheerio';
+
+import type { Data } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+
+const rootUrl = 'https://www.cyzone.cn';
+const apiRootUrl = 'https://api1.cyzone.cn';
+const apiShowUrl = new URL('v2/content/app_content/show', apiRootUrl).href;
+
+/**
+ * Retrieves information from a given URL.
+ * @param {string} url        - The URL to retrieve information from.
+ * @returns {Promise<Object>} - A promise that resolves to an object containing the retrieved information.
+ */
+const getInfo = (url) =>
+    cache.tryGet(url, async (): Promise<Data> => {
+        const { data: response } = await got(url);
+
+        const $ = load(response);
+
+        const avatar = $('img.avatar')?.prop('src')?.split('?', 1)[0] ?? undefined;
+        const icon = new URL($('link[rel="icon"]').prop('href')!, rootUrl).href;
+        const image = new URL($('div.logo img').prop('src')!, rootUrl).href;
+
+        return {
+            title: $('title').text(),
+            link: url,
+            description: $('meta[name="description"]').prop('content'),
+            language: 'zh-CN',
+            image: avatar || image,
+            icon,
+            logo: icon,
+            author: $('meta[name="app-mobile-web-app-title"]').prop('content'),
+        };
+    });
+
+/**
+ * Process the item list and return the resulting array.
+ * @param {string} apiUrl          - The URL of the API.
+ * @param {number} limit           - The limit of the results.
+ * @param {...Object} searchParams - The search parameter objects.
+ * @returns {Promise<Array>}       - The processed item array.
+ */
+const processItems = async (apiUrl, limit, ...params) => {
+    // Merge search parameters
+    const searchParams = {
+        size: limit,
+    };
+    for (const param of params) {
+        Object.assign(searchParams, param);
+    }
+
+    const { data: response } = await got(apiUrl, {
+        searchParams,
+    });
+
+    return processItemList(response, limit);
+};
+
+const processItemList = async (response, limit) => {
+    let items = (response.data?.article ?? response.data?.data ?? response.data).slice(0, limit).map((item) => {
+        item = item.item ?? item;
+
+        return {
+            title: item.title,
+            link: item.url.startsWith('//') ? `https:${item.url}` : item.url,
+            description: item.description,
+            category: [item.category_name, ...(item.tags?.split(',') ?? [])],
+            guid: item.content_id,
+            pubDate: parseDate(item.published_at * 1000),
+            upvotes: item.votes ?? 0,
+        };
+    });
+
+    items = await Promise.all(
+        items.map((item) =>
+            cache.tryGet(`cyzone-${item.guid}`, async () => {
+                const { data: detailResponse } = await got.post(apiShowUrl, {
+                    json: {
+                        content_id: item.guid,
+                    },
+                });
+
+                const data = detailResponse.data;
+
+                const categories = [data.category, ...item.category, ...(data.tags?.split(',') ?? [])];
+
+                const content = load(data.content);
+
+                content('img').each((_, el) => {
+                    if (content(el).prop('src')) {
+                        content(el).prop('src', content(el).prop('src')!.split('?', 1)[0]);
+                    } else {
+                        content(el).remove();
+                    }
+                });
+
+                item.title = data.title;
+                // The API link_url can be empty, so use the native article path.
+                item.link = `${rootUrl}/article/${item.guid}.html`;
+                item.description = content.html();
+                item.author = data.author_name ?? data.author;
+                item.category = [...new Set(categories)].filter(Boolean);
+                item.guid = `cyzone-${item.guid}`;
+                item.pubDate = parseDate(data.published_at * 1000);
+                item.upvotes = data.votes ?? 0;
+
+                return item;
+            })
+        )
+    );
+
+    return items;
+};
+
+export { apiRootUrl, getInfo, processItemList, processItems, rootUrl };

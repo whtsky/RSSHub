@@ -1,0 +1,53 @@
+import { load } from 'cheerio';
+
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+
+const baseUrl = 'https://www.plurk.com';
+
+/**
+ *
+ * @param {objects} userIds Array of user ids
+ * @returns
+ */
+const fetchFriends = async (userIds) => {
+    const { data } = await got.post(`${baseUrl}/Users/fetchFriends`, {
+        form: {
+            ids: JSON.stringify(userIds),
+            r: 'gp',
+        },
+    });
+    return data;
+};
+
+/**
+ *
+ * @param {string} plurkGuid plurk guid, should start with 'plurk:'
+ * @param {object} item plurk object
+ * @param {string} author author name, can be `null`
+ * @returns {object} item object
+ */
+const getPlurk = (plurkGuid, item, author) => {
+    const $ = load(item.content || item.rendered, null, false);
+    $('img').each((_, e) => {
+        const $e = $(e);
+        $e.removeAttr('height').removeAttr('width');
+        if (!($e.attr('alt') && $e.attr('alt')!.startsWith('http'))) {
+            return;
+        }
+
+        $e.attr('src', $e.attr('alt'));
+        $e.removeAttr('alt');
+    });
+
+    return {
+        title: item.content_raw ?? ($.text() || plurkGuid),
+        description: $.html(),
+        guid: plurkGuid,
+        link: item.link_url || (item.plurk_id === undefined ? undefined : `${baseUrl}/p/${BigInt(item.plurk_id).toString(36)}`),
+        author: author || undefined,
+        pubDate: item.posted ? parseDate(item.posted) : undefined,
+    };
+};
+
+export { baseUrl, fetchFriends, getPlurk };
